@@ -2,7 +2,7 @@
 
 using System.Text.RegularExpressions;
 
-string packageDir = "./__NAMESPACE__";
+string packageDir = "./Collektive.Unity";
 
 if (!Directory.Exists(packageDir))
 {

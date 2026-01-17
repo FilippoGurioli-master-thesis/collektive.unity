@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 // Configuration
-string samplesDir = "./__NAMESPACE__/Samples~";
+string samplesDir = "./Collektive.Unity/Samples~";
 string packageDir = "./Package";
 
 if (!Directory.Exists(samplesDir))

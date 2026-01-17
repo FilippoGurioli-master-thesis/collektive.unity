@@ -2,6 +2,6 @@
 _layout: landing
 ---
 
-# __NAME__
+# Collektive.Unity
 
 Put here your documentation.

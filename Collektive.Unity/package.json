@@ -1,0 +1,22 @@
+{
+  "name": "it.unibo.collektive.unity",
+  "version": "0.0.0",
+  "description": "unity package that enables aggregate simulation through collektive framework with FFI communication",
+  "displayName": "Collektive.Unity",
+  "unity": "6000.2",
+  "author": {
+    "name": "FilippoGurioli",
+    "email": "filippo.gurioli@studio.unibo.it",
+    "url": "https://github.com/FilippoGurioli"
+  },
+  "changelogUrl": "https://github.com/FilippoGurioli/collektive.unity/CHANGELOG.md",
+  "dependencies": {},
+  "documentationUrl": "https://FilippoGurioli.github.io/collektive.unity/",
+  "hideInEditor": false,
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "licenseUrl": "https://github.com/FilippoGurioli/collektive.unity/LICENSE"
+}

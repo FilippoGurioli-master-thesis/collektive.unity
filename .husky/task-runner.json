@@ -11,7 +11,7 @@
          "group": "pre-commit",
          "command": "dotnet",
          "args": [
-            "tool", "run", "csharpier", "format", "./__NAMESPACE__"
+            "tool", "run", "csharpier", "format", "./Collektive.Unity"
          ],
       },
       {

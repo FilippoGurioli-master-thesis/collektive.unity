@@ -238,14 +238,14 @@ Obviously the second case is the one that fits my case study.
   - `GPG_KEY_ID`: an ephemeral gpg key used to sign the artifact (Warning: this key is generated during the script, nothing will be asked to the user)
   - `GPG_PRIVATE_KEY`: the private key used to sign the artifact (Warning: this key is generated during the script, nothing will be asked to the user)
 - replaces all occurrences of template values in the project with values inserted by the user
-  - `__DOMAIN__`
-  - `__COMPANY__`
-  - `__PACKAGE__`
-  - `__NAMESPACE__`
-  - `__NAME__`
-  - `__DESCRIPTION__`
-  - `__GIT_USER__`
-  - `__GIT_MAIL__`
+  - `it`
+  - `unibo`
+  - `collektive.unity`
+  - `Collektive.Unity`
+  - `Collektive.Unity`
+  - `unity package that enables aggregate simulation through collektive framework with FFI communication`
+  - `FilippoGurioli`
+  - `filippo.gurioli@studio.unibo.it`
 - installs npm and dotnet dependencies
 - boots the project with unity batch mode
 - installs git hooks

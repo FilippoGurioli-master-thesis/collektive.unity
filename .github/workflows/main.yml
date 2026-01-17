@@ -77,7 +77,7 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v5
         with:
-          path: ./Sandbox.__NAMESPACE__/Library
+          path: ./Sandbox.Collektive.Unity/Library
           key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-${{ matrix.targetPlatform }}-
@@ -85,7 +85,7 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: ./Sandbox.__NAMESPACE__
+          projectPath: ./Sandbox.Collektive.Unity
           allowDirtyBuild: true
 
   test:
@@ -100,13 +100,13 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v5
         with:
-          path: ./Sandbox.__NAMESPACE__/Library
+          path: ./Sandbox.Collektive.Unity/Library
           key: Library-test-${{ hashFiles('**/ProjectSettings/**') }}
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v4
         id: tests
         with:
-          projectPath: ./Sandbox.__NAMESPACE__
+          projectPath: ./Sandbox.Collektive.Unity
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageResultsPath ./coverage-results
       - name: Upload Test Results
@@ -120,7 +120,7 @@ jobs:
         if: always()
         with:
           name: Coverage-Results
-          path: ./Sandbox.__NAMESPACE__/coverage-results
+          path: ./Sandbox.Collektive.Unity/coverage-results
 
   sonar-analysis:
     name: SonarQube Analysis
@@ -139,12 +139,12 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v5
         with:
-          path: ./Sandbox.__NAMESPACE__/Library
+          path: ./Sandbox.Collektive.Unity/Library
           key: Library-test-${{ hashFiles('**/ProjectSettings/**') }}
       - name: Generate Solution
         uses: game-ci/unity-builder@v4
         with:
-          projectPath: ./Sandbox.__NAMESPACE__
+          projectPath: ./Sandbox.Collektive.Unity
           customParameters: -executeMethod UnityEditor.SyncVS.SyncSolution -quit
       - name: Download Test Results
         uses: actions/download-artifact@v7
@@ -159,12 +159,12 @@ jobs:
       - name: SonarQube Begin
         run: |
           dotnet tool run dotnet-sonarscanner begin \
-            /k:"__COMPANY_____NAMESPACE__" \
+            /k:"unibo_Collektive.Unity" \
             /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" \
             /d:sonar.token="${{ env.SONAR_TOKEN }}" \
             /s:"$GITHUB_WORKSPACE/sonar-project.properties"
       - name: Build Unity Solution
-        run: dotnet build ./Sandbox.__NAMESPACE__/*.sln
+        run: dotnet build ./Sandbox.Collektive.Unity/*.sln
       - name: SonarQube End
         run: |
           dotnet tool run dotnet-sonarscanner end \
@@ -189,7 +189,7 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Create package archive (Package)
         if: needs.check-template.outputs.is_template == 'false'
-        run: zip -r package.zip ./__NAMESPACE__
+        run: zip -r package.zip ./Collektive.Unity
       - name: Create package archive (Template)
         if: needs.check-template.outputs.is_template == 'true'
         run: zip -r package.zip .

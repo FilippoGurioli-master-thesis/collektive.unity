@@ -30,11 +30,11 @@ if (isTemplate) {
       prepareCmd: "dotnet tool run dotnet-script .automation/UpdateUnityPackageVersion.js ${nextRelease.version}"
     }],
     ["@semantic-release/changelog", {
-      changelogFile: "__NAMESPACE__/CHANGELOG.md"
+      changelogFile: "Collektive.Unity/CHANGELOG.md"
     }],
     ["@semantic-release/github", {
       assets: [
-        { path: "package.zip", label: "__NAME__" },
+        { path: "package.zip", label: "Collektive.Unity" },
         { path: "package.zip.sha256", label: "SHA256 Digest" },
         { path: "package.zip.sha256.sig", label: "Signature" }
       ]
@@ -42,7 +42,7 @@ if (isTemplate) {
     [
       "@semantic-release/git",
       {
-        assets: ['__NAMESPACE__/package.json', '__NAMESPACE__/package-lock.json', '__NAMESPACE__/CHANGELOG.md'],
+        assets: ['Collektive.Unity/package.json', 'Collektive.Unity/package-lock.json', 'Collektive.Unity/CHANGELOG.md'],
         message: 'chore(release): ${nextRelease.version} [skip ci]'
       }
     ]

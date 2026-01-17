@@ -1,6 +1,6 @@
 {
-    "name": "__COMPANY__.__PACKAGE__.Tests",
-    "rootNamespace": "__NAMESPACE__.Tests",
+    "name": "unibo.collektive.unity",
+    "rootNamespace": "Collektive.Unity",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace __NAMESPACE__
+namespace Collektive.Unity
 {
     /// <summary>
     /// This is a test documentation.

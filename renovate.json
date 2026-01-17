@@ -6,16 +6,14 @@
     ":semanticCommitTypeAll(chore)",
     "abandonments:recommended"
   ],
-  "assignees": [
-    "FilippoGurioli"
-  ],
+  "assignees": [ "FilippoGurioli" ],
   "automerge": true,
   "dependencyDashboard": true,
   "abandonmentThreshold": "3 years",
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
-    "__NAMESPACE__/package.json"
+    "Collektive.Unity/package.json"
   ],
   "git-submodules": {
     "enabled": true

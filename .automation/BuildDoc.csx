@@ -12,7 +12,7 @@ string configPath;
 if (File.Exists(Path.Combine(rootDir, ".template")))
     configPath = Path.Combine(rootDir, "docs", "docfx.json");
 else
-    configPath = Path.Combine(rootDir, "__NAMESPACE__", "Documentation~", "docfx.json");
+    configPath = Path.Combine(rootDir, "Collektive.Unity", "Documentation~", "docfx.json");
 
 Log.Info($"Building documentation using config: {configPath}");
 

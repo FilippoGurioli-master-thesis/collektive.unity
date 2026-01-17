@@ -19,7 +19,7 @@ string version = Args[0];
 // 2. Resolve paths
 string scriptDir = Path.GetDirectoryName(GetScriptPath());
 string packageJsonPath = Path.GetFullPath(
-    Path.Combine(scriptDir, "..", "__NAMESPACE__", "package.json")
+    Path.Combine(scriptDir, "..", "Collektive.Unity", "package.json")
 );
 
 if (!File.Exists(packageJsonPath))

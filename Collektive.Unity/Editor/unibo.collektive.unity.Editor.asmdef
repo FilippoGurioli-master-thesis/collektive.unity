@@ -1,6 +1,6 @@
 {
-    "name": "__COMPANY__.__PACKAGE__.Editor",
-    "rootNamespace": "__NAMESPACE__.Editor",
+    "name": "unibo.collektive.unity.Editor",
+    "rootNamespace": "Collektive.Unity.Editor",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

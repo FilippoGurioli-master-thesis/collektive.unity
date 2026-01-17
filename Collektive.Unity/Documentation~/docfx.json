@@ -29,8 +29,8 @@
     "resource": [ { "files": "images/**" } ],
     "dest": "../../_site",
     "globalMetadata": {
-      "_appTitle": "__NAME__",
-      "_appName": "__NAME__",
+      "_appTitle": "Collektive.Unity",
+      "_appName": "Collektive.Unity",
       "_appLogoPath": "images/logo.png",
       "_appFaviconPath": "images/favicon.ico",
       "_enableSearch": true,
