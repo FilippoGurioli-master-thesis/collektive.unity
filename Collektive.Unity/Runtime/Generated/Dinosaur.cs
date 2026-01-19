@@ -27,7 +27,8 @@ namespace Collektive.Unity.Generated {
             "Cg5kaW5vc2F1ci5wcm90bxIJZ2VuZXJhdGVkIlEKCERpbm9zYXVyEgwKBG5h",
             "bWUYASABKAkSFAoMcGljdHVyZV91cmxzGAIgAygJEiEKBnBlcmlvZBgDIAEo",
             "DjIRLmdlbmVyYXRlZC5QZXJpb2QqNAoGUGVyaW9kEgwKCFRSSUFTU0lDEAAS",
-            "DAoISlVSQVNTSUMQARIOCgpDUkVUQUNFT1VTEAJiBnByb3RvMw=="));
+            "DAoISlVSQVNTSUMQARIOCgpDUkVUQUNFT1VTEAJCHaoCGkNvbGxla3RpdmUu",
+            "VW5pdHkuR2VuZXJhdGVkYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Collektive.Unity.Generated.Period), }, null, new pbr::GeneratedClrTypeInfo[] {
