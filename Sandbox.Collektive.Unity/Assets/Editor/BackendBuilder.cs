@@ -9,7 +9,7 @@ using UnityEditor.Build.Reporting;
 using Debug = UnityEngine.Debug;
 using System.Runtime.InteropServices;
 
-namespace Collektive.Unity.Editor
+namespace Editor
 {
     public static class BackendBuilder
     {
