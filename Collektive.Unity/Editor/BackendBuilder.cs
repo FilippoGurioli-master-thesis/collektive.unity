@@ -150,6 +150,18 @@ namespace Collektive.Unity.Editor
             BackendBuilder.RebuildNativeLibrary();
         }
     }
+
+    [InitializeOnLoad]
+    public static class AutoBuilder
+    {
+        static AutoBuilder() => EditorApplication.playModeStateChanged += OnPlayModeChanged;
+
+        private static void OnPlayModeChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingEditMode)
+                BackendBuilder.RebuildNativeLibrary();
+        }
+    }
 }
 
 #endif

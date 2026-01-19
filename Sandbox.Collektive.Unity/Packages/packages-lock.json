@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.stalomeow.google-protobuf": {
+      "version": "25.2.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1"
+      },
+      "url": "https://package.openupm.com"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.9",
       "depth": 0,
@@ -89,7 +98,7 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.5",
-      "depth": 3,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
