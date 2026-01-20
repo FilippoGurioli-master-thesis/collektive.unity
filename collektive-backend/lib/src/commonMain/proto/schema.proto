@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "shared.proto";
+
+option java_package = "it.unibo.collektive.unity.schema";
+option csharp_namespace = "Collektive.Unity.Schema";
+
+message NodeState {
+  double gradient = 1;
+}
+
+message SensorData {
+  Vector3 position = 1;
+  bool isSource = 2;
+}
+
+message CustomGlobalData {
+}
