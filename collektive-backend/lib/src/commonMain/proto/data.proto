@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "schema.proto";
+import "user-defined-schema.proto";
 import "shared.proto";
 
 option java_package = "it.unibo.collektive.unity.data";
