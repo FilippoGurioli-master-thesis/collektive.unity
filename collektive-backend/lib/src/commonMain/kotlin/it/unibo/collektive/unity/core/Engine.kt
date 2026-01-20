@@ -14,7 +14,7 @@ interface Engine {
     fun updateGlobalData(data: CustomGlobalData)
 }
 
-class EngineImpl(initialState: List<NodeState>? = null, private val nm: NetworkManager, private var globalData: GlobalData) : Engine {
+class EngineImpl(private val nm: NetworkManager, private var globalData: GlobalData) : Engine {
 
     private var currentSensing: List<SensorData>? = null
     private val nodes: List<Collektive<Int, NodeState>> = (0 until globalData.totalNodes).map { id ->
