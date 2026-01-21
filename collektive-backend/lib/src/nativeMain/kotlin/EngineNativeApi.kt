@@ -1,6 +1,7 @@
 package it.unibo.collektive.unity.core
 
 import it.unibo.collektive.unity.data.GlobalData
+import it.unibo.collektive.unity.schema.CustomGlobalData
 import it.unibo.collektive.unity.schema.NodeState
 import it.unibo.collektive.unity.schema.SensorData
 import kotlinx.cinterop.ByteVar
@@ -65,4 +66,26 @@ private fun prepareReturnData(results: List<ByteArray>): CPointer<CPointerVar<By
         resultPointers.plus(i)!!.pointed.value = nativeBytes
     }
     return resultPointers
+}
+
+@OptIn(ExperimentalNativeApi::class)
+@CName("add_connection")
+fun addConnection(node1: Int, node2: Int): Boolean {
+    requireEngine()
+    return engine?.addConnection(node1, node2)!!
+}
+
+@OptIn(ExperimentalNativeApi::class)
+@CName("remove_connection")
+fun removeConnection(node1: Int, node2: Int): Boolean {
+    requireEngine()
+    return engine?.removeConnection(node1, node2)!!
+}
+
+@OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
+@CName("update_global_data")
+fun updateGlobalData(dataPointer: CPointer<ByteVar>?, dataSize: Int)
+{
+    require(dataPointer != null) { "Invalid null pointer. Global data pointer should point to valid heap structure" }
+    engine?.updateGlobalData(CustomGlobalData.ADAPTER.decode(dataPointer.readBytes(dataSize)))
 }
