@@ -1,7 +1,9 @@
 {
     "name": "unibo.collektive.unity.Editor",
     "rootNamespace": "Collektive.Unity.Editor",
-    "references": [],
+    "references": [
+        "GUID:294ff7089ed3f05678fe0c56328d5837"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
