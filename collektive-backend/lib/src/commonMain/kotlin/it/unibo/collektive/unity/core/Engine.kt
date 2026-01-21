@@ -1,6 +1,8 @@
 package it.unibo.collektive.unity.core
 
 import it.unibo.collektive.Collektive
+import it.unibo.collektive.unity.core.network.Network
+import it.unibo.collektive.unity.core.network.NetworkManager
 import it.unibo.collektive.unity.data.GlobalData
 import it.unibo.collektive.unity.examples.entrypoint
 import it.unibo.collektive.unity.schema.CustomGlobalData

@@ -1,5 +1,6 @@
 package it.unibo.collektive.unity.core
 
+import it.unibo.collektive.unity.core.network.NetworkManagerImpl
 import it.unibo.collektive.unity.data.GlobalData
 import it.unibo.collektive.unity.schema.CustomGlobalData
 import it.unibo.collektive.unity.schema.NodeState
