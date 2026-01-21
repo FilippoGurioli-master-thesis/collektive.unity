@@ -11,6 +11,7 @@ import kotlinx.cinterop.CPointerVar
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.IntVar
 import kotlinx.cinterop.allocArray
+import kotlinx.cinterop.free
 import kotlinx.cinterop.get
 import kotlinx.cinterop.nativeHeap
 import kotlinx.cinterop.plus
@@ -22,6 +23,8 @@ import platform.posix.memcpy
 import kotlin.experimental.ExperimentalNativeApi
 
 var engine: Engine? = null
+
+private fun requireEngine() = require(engine != null) { "The engine is null" }
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("initialize")
@@ -37,14 +40,14 @@ fun initialize(dataPointer: CPointer<ByteVar>?, dataSize: Int)
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("step")
 fun step(
-    count: Int,
     pointers: CPointer<CPointerVar<ByteVar>>?,
-    sizes: CPointer<IntVar>?
+    sizes: CPointer<IntVar>?,
+    outputSizes: CPointer<IntVar>?
 ): CPointer<CPointerVar<ByteVar>> {
     requireEngine()
-    require(pointers != null || sizes != null || count > 0)
-    { "Invalid data passed to step function. Either pointers or sizes are null or count is less than zero" }
-    val sensingData = List(count) { i ->
+    require(pointers != null || sizes != null || outputSizes != null)
+    { "Invalid data passed to step function. Pointers or sizes are null" }
+    val sensingData = List(engine?.globalData?.totalNodes!!) { i ->
         val dataPtr = pointers?.get(i)
         val dataSize = sizes?.get(i)
         require(dataSize != null) { "A value inside the sizes list was null (index: $i)" }
@@ -53,18 +56,17 @@ fun step(
     }
     val nodeStates = engine?.step(sensingData)!!
     val results: List<ByteArray> = nodeStates.map { NodeState.ADAPTER.encode(it) }
-    return prepareReturnData(results)
+    return prepareReturnData(results, outputSizes)
 }
 
-private fun requireEngine() = require(engine != null) { "The engine is null" }
-
 @OptIn(ExperimentalForeignApi::class)
-private fun prepareReturnData(results: List<ByteArray>): CPointer<CPointerVar<ByteVar>> {
+private fun prepareReturnData(results: List<ByteArray>, outputSizes: CPointer<IntVar>?): CPointer<CPointerVar<ByteVar>> {
     val resultPointers = nativeHeap.allocArray<CPointerVar<ByteVar>>(results.size)
     results.forEachIndexed { i, bytes ->
         val nativeBytes = nativeHeap.allocArray<ByteVar>(bytes.size)
         memcpy(nativeBytes, bytes.refTo(0), bytes.size.toULong())
         resultPointers.plus(i)!!.pointed.value = nativeBytes
+        outputSizes?.plus(i)!!.pointed.value = bytes.size
     }
     return resultPointers
 }
@@ -89,4 +91,15 @@ fun updateGlobalData(dataPointer: CPointer<ByteVar>?, dataSize: Int)
 {
     require(dataPointer != null) { "Invalid null pointer. Global data pointer should point to valid heap structure" }
     engine?.updateGlobalData(CustomGlobalData.ADAPTER.decode(dataPointer.readBytes(dataSize)))
+}
+
+@OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
+@CName("free_results")
+fun freeResults(pointers: CPointer<CPointerVar<ByteVar>>?, count: Int) {
+    if (pointers == null) return
+    for (i in 0 until count)
+    {
+        nativeHeap.free(pointers[i]!!)
+    }
+    nativeHeap.free(pointers)
 }

@@ -10,14 +10,16 @@ import it.unibo.collektive.unity.schema.NodeState
 import it.unibo.collektive.unity.schema.SensorData
 
 interface Engine {
+    val globalData: GlobalData
     fun step(sensing: List<SensorData>): List<NodeState>
     fun addConnection(node1: Int, node2: Int): Boolean
     fun removeConnection(node1: Int, node2: Int): Boolean
     fun updateGlobalData(data: CustomGlobalData)
 }
 
-class EngineImpl(private val nm: NetworkManager, private var globalData: GlobalData) : Engine {
+class EngineImpl(private val nm: NetworkManager, private var internalGlobalData: GlobalData) : Engine {
 
+    override val globalData: GlobalData = internalGlobalData
     private var currentSensing: List<SensorData>? = null
     private val nodes: List<Collektive<Int, NodeState>> = (0 until globalData.totalNodes).map { id ->
         val network = Network(id, nm)
@@ -37,5 +39,5 @@ class EngineImpl(private val nm: NetworkManager, private var globalData: GlobalD
 
     override fun removeConnection(node1: Int, node2: Int): Boolean = nm.removeConnection(node1, node2)
 
-    override fun updateGlobalData(data: CustomGlobalData) { globalData = globalData.copy(customData = data) }
+    override fun updateGlobalData(data: CustomGlobalData) { internalGlobalData = internalGlobalData.copy(customData = data) }
 }
