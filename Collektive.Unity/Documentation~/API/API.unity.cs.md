@@ -1,3 +1,5 @@
+```csharp
+```
 public class CollektiveEngineBehaviour : SingletonBehaviour<CollektiveEngineBehaviour>
 {
     public GlobalData GlobalData => _engine.GlobalData;
@@ -18,3 +20,5 @@ public abstract class CollektiveNode<TSensorData, TNodeState> : MonoBehaviour
     protected abstract TSensorData Sense();
     protected abstract void Act(TNodeState state);
 }
+```
+```
