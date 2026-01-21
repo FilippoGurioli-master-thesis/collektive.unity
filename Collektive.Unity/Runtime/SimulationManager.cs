@@ -39,6 +39,7 @@ namespace Collektive.Unity
             var states = EngineNativeApi.Step(sensing);
             for (var i = 0; i < _nodes.Count; i++)
                 _nodes[i].OnStateReceived?.Invoke(states[i]);
+            Physics.Simulate(deltaTime);
         }
 
         public bool AddConnection(int node1, int node2) =>

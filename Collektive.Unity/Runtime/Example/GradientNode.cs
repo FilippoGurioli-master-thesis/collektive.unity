@@ -37,7 +37,7 @@ namespace Collektive.Unity.Example
         {
             gradient = state.Gradient;
             var t = Mathf.InverseLerp(0f, 30f, (float)gradient);
-            var color = isSource ? Color.white : Color.HSVtoRGB(t, 1f, 1f);
+            var color = isSource ? Color.white : Color.HSVToRGB(t, 1f, 1f);
             _renderer.material.color = color;
         }
     }
