@@ -1,3 +1,5 @@
+```cs
+```
 interface ICollektiveEngine
 {
     List<NodeState> Step(List<SensorData> sensing);
@@ -18,3 +20,5 @@ interface NodeState;
 interface SensorData;
 
 interface CustomGlobalData;
+```
+```
