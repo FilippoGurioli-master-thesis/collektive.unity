@@ -143,11 +143,10 @@ jobs:
           path: ./Sandbox.Collektive.Unity/Library
           key: Library-test-${{ hashFiles('**/ProjectSettings/**') }}
       - name: Generate Solution
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-command@v4
         with:
           projectPath: ./Sandbox.Collektive.Unity
-          allowDirtyBuild: true
-          customParameters: -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+          command: -executeMethod UnityEditor.SyncVS.SyncSolution -quit
       - name: Download Test Results
         uses: actions/download-artifact@v7
         with:
