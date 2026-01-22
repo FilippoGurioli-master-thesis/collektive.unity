@@ -7,7 +7,7 @@ import it.unibo.collektive.networking.OutboundEnvelope
 
 class Network(val id: Int, val nm: NetworkManager) : Mailbox<Int> {
 
-    override val inMemory: Boolean = false
+    override val inMemory: Boolean = true
 
     init { nm.registerNode(id) }
 

@@ -26,7 +26,7 @@ class EngineImpl(private val nm: NetworkManager, private var internalGlobalData:
         Collektive(id, network) {
             val sensorData = currentSensing?.get(id)
             require(sensorData != null) { "Sensor data should never be null here" }
-            entrypoint(sensorData)
+            return@Collektive entrypoint(sensorData)
         }
     }
 
