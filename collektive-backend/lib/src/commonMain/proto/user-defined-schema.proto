@@ -7,6 +7,7 @@ option csharp_namespace = "Collektive.Unity.Schema";
 
 message NodeState {
   double gradient = 1;
+  Vector3 position = 2;
 }
 
 message SensorData {

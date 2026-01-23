@@ -24,15 +24,16 @@ namespace Collektive.Unity.Schema {
     static UserDefinedSchemaReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Chl1c2VyLWRlZmluZWQtc2NoZW1hLnByb3RvGgxzaGFyZWQucHJvdG8iHQoJ",
-            "Tm9kZVN0YXRlEhAKCGdyYWRpZW50GAEgASgBIjoKClNlbnNvckRhdGESGgoI",
-            "cG9zaXRpb24YASABKAsyCC5WZWN0b3IzEhAKCGlzU291cmNlGAIgASgIIhIK",
-            "EEN1c3RvbUdsb2JhbERhdGFCPAogaXQudW5pYm8uY29sbGVrdGl2ZS51bml0",
-            "eS5zY2hlbWGqAhdDb2xsZWt0aXZlLlVuaXR5LlNjaGVtYWIGcHJvdG8z"));
+            "Chl1c2VyLWRlZmluZWQtc2NoZW1hLnByb3RvGgxzaGFyZWQucHJvdG8iOQoJ",
+            "Tm9kZVN0YXRlEhAKCGdyYWRpZW50GAEgASgBEhoKCHBvc2l0aW9uGAIgASgL",
+            "MgguVmVjdG9yMyI6CgpTZW5zb3JEYXRhEhoKCHBvc2l0aW9uGAEgASgLMggu",
+            "VmVjdG9yMxIQCghpc1NvdXJjZRgCIAEoCCISChBDdXN0b21HbG9iYWxEYXRh",
+            "QjwKIGl0LnVuaWJvLmNvbGxla3RpdmUudW5pdHkuc2NoZW1hqgIXQ29sbGVr",
+            "dGl2ZS5Vbml0eS5TY2hlbWFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Collektive.Unity.Shared.SharedReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Collektive.Unity.Schema.NodeState), global::Collektive.Unity.Schema.NodeState.Parser, new[]{ "Gradient" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Collektive.Unity.Schema.NodeState), global::Collektive.Unity.Schema.NodeState.Parser, new[]{ "Gradient", "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Collektive.Unity.Schema.SensorData), global::Collektive.Unity.Schema.SensorData.Parser, new[]{ "Position", "IsSource" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Collektive.Unity.Schema.CustomGlobalData), global::Collektive.Unity.Schema.CustomGlobalData.Parser, null, null, null, null, null)
           }));
@@ -77,6 +78,7 @@ namespace Collektive.Unity.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public NodeState(NodeState other) : this() {
       gradient_ = other.gradient_;
+      position_ = other.position_ != null ? other.position_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -98,6 +100,18 @@ namespace Collektive.Unity.Schema {
       }
     }
 
+    /// <summary>Field number for the "position" field.</summary>
+    public const int PositionFieldNumber = 2;
+    private global::Collektive.Unity.Shared.Vector3 position_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Collektive.Unity.Shared.Vector3 Position {
+      get { return position_; }
+      set {
+        position_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -114,6 +128,7 @@ namespace Collektive.Unity.Schema {
         return true;
       }
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Gradient, other.Gradient)) return false;
+      if (!object.Equals(Position, other.Position)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -122,6 +137,7 @@ namespace Collektive.Unity.Schema {
     public override int GetHashCode() {
       int hash = 1;
       if (Gradient != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Gradient);
+      if (position_ != null) hash ^= Position.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -144,6 +160,10 @@ namespace Collektive.Unity.Schema {
         output.WriteRawTag(9);
         output.WriteDouble(Gradient);
       }
+      if (position_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Position);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -158,6 +178,10 @@ namespace Collektive.Unity.Schema {
         output.WriteRawTag(9);
         output.WriteDouble(Gradient);
       }
+      if (position_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Position);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -170,6 +194,9 @@ namespace Collektive.Unity.Schema {
       int size = 0;
       if (Gradient != 0D) {
         size += 1 + 8;
+      }
+      if (position_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -185,6 +212,12 @@ namespace Collektive.Unity.Schema {
       }
       if (other.Gradient != 0D) {
         Gradient = other.Gradient;
+      }
+      if (other.position_ != null) {
+        if (position_ == null) {
+          Position = new global::Collektive.Unity.Shared.Vector3();
+        }
+        Position.MergeFrom(other.Position);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -209,6 +242,13 @@ namespace Collektive.Unity.Schema {
             Gradient = input.ReadDouble();
             break;
           }
+          case 18: {
+            if (position_ == null) {
+              Position = new global::Collektive.Unity.Shared.Vector3();
+            }
+            input.ReadMessage(Position);
+            break;
+          }
         }
       }
     #endif
@@ -230,6 +270,13 @@ namespace Collektive.Unity.Schema {
             break;
           case 9: {
             Gradient = input.ReadDouble();
+            break;
+          }
+          case 18: {
+            if (position_ == null) {
+              Position = new global::Collektive.Unity.Shared.Vector3();
+            }
+            input.ReadMessage(Position);
             break;
           }
         }
