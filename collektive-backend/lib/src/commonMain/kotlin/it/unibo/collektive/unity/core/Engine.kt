@@ -1,6 +1,7 @@
 package it.unibo.collektive.unity.core
 
 import it.unibo.collektive.Collektive
+import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.unity.core.network.Network
 import it.unibo.collektive.unity.core.network.NetworkManager
 import it.unibo.collektive.unity.data.GlobalData
@@ -17,7 +18,7 @@ interface Engine {
     fun updateGlobalData(data: CustomGlobalData)
 }
 
-class EngineImpl(private val nm: NetworkManager, private var internalGlobalData: GlobalData) : Engine {
+class EngineImpl(private val nm: NetworkManager, private var internalGlobalData: GlobalData, private val program: Aggregate<Int>.(SensorData) -> NodeState) : Engine {
 
     override val globalData: GlobalData get() = internalGlobalData
     private var currentSensing: MutableMap<Int, SensorData> = mutableMapOf()
@@ -26,7 +27,7 @@ class EngineImpl(private val nm: NetworkManager, private var internalGlobalData:
         Collektive(id, network) {
             val sensorData = currentSensing[id]
             require(sensorData != null) { "Sensor data should never be null here" }
-            return@Collektive entrypoint(sensorData)
+            return@Collektive program(sensorData)
         }
     }
 

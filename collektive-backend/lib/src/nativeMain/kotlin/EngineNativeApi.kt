@@ -5,21 +5,18 @@ import it.unibo.collektive.unity.data.GlobalData
 import it.unibo.collektive.unity.schema.CustomGlobalData
 import it.unibo.collektive.unity.schema.NodeState
 import it.unibo.collektive.unity.schema.SensorData
+import it.unibo.collektive.unity.examples.entrypoint
 import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.CPointerVar
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.IntVar
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.allocArray
 import kotlinx.cinterop.convert
 import kotlinx.cinterop.free
-import kotlinx.cinterop.get
 import kotlinx.cinterop.nativeHeap
-import kotlinx.cinterop.plus
 import kotlinx.cinterop.pointed
 import kotlinx.cinterop.readBytes
-import kotlinx.cinterop.refTo
 import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.value
 import platform.posix.memcpy
@@ -37,7 +34,7 @@ fun initialize(dataPointer: CPointer<ByteVar>?, dataSize: Int)
     engine = EngineImpl(
         NetworkManagerImpl(),
         GlobalData.ADAPTER.decode(dataPointer.readBytes(dataSize))
-    )
+    ) { entrypoint(it) }
 }
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)

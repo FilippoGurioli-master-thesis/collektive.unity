@@ -1,15 +1,10 @@
 package it.unibo.collektive.unity.core
 
-import it.unibo.collektive.Collektive
-import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.networking.NeighborsData
 import it.unibo.collektive.networking.NoNeighborsData
 import it.unibo.collektive.networking.OutboundEnvelope
-import it.unibo.collektive.unity.core.network.Network
 import it.unibo.collektive.unity.core.network.NetworkManager
 import it.unibo.collektive.unity.data.GlobalData
-import it.unibo.collektive.unity.examples.entrypoint
 import it.unibo.collektive.unity.schema.NodeState
 import it.unibo.collektive.unity.schema.SensorData
 import kotlin.test.Test
@@ -41,6 +36,15 @@ class FakeNetworkManager : NetworkManager {
     }
 }
 
+fun noOp(): NodeState = NodeState()
+
+var counter = 0
+
+fun sideEffectOp(): NodeState {
+    counter += 1
+    return NodeState()
+}
+
 class EngineTest {
 
     private fun createSensor() = SensorData()
@@ -50,7 +54,7 @@ class EngineTest {
         val nm = FakeNetworkManager()
         val totalNodes = 3
         val globalData = GlobalData(totalNodes = totalNodes, deltaTime = 0.1)
-        EngineImpl(nm, globalData)
+        EngineImpl(nm, globalData) { noOp() }
         assertTrue(nm.hasRegistered)
     }
 
@@ -59,18 +63,19 @@ class EngineTest {
         val nm = FakeNetworkManager()
         val totalNodes = 2
         val globalData = GlobalData(totalNodes = totalNodes, deltaTime = 0.02)
-        val engine = EngineImpl(nm, globalData)
+        val engine = EngineImpl(nm, globalData) { sideEffectOp() }
         val sensing0 = createSensor()
         val sensing1 = createSensor()
         engine.step(0, sensing0)
         engine.step(1, sensing1)
+        assertEquals(counter, 2, "Should have been cycled twice")
         assertTrue(nm.hasSent || nm.hasReceived, "Network should have been engaged during the cycle")
     }
 
     @Test
     fun testConnectionManagement() {
         val nm = FakeNetworkManager()
-        val engine = EngineImpl(nm, GlobalData(totalNodes = 2, deltaTime = 1.0))
+        val engine = EngineImpl(nm, GlobalData(totalNodes = 2, deltaTime = 1.0)) { noOp() }
         assertTrue(engine.addConnection(0, 1), "Connection should be added")
         assertTrue(nm.connections.contains(0 to 1), "NetworkManager should reflect the change")
         assertTrue(engine.removeConnection(0, 1), "Connection should be removed")
