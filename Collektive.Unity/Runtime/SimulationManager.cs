@@ -19,8 +19,8 @@ namespace Collektive.Unity
         [SerializeField, Tooltip("Period that passes between one cycle and the next one")]
         private float deltaTime = 0.02f;
 
-        [SerializeField, Tooltip("Set to true to pause simulation")]
-        private bool simulationPaused = false;
+        [SerializeField, Tooltip("Set to true to pause global simulation")]
+        private bool globalSimulationPaused = false;
 
         private List<Node> _nodes = new();
         private LinkManager _linkManager;
@@ -47,7 +47,7 @@ namespace Collektive.Unity
 
         private void Update()
         {
-            if (simulationPaused)
+            if (globalSimulationPaused)
                 return;
             foreach (var node in _nodes)
             {
