@@ -71,6 +71,17 @@ namespace Collektive.Unity
             return EngineNativeApi.RemoveConnection(node1, node2);
         }
 
+        public int AddNode(Node node)
+        {
+            //TODO
+            return -1;
+        }
+
+        public void RemoveNode(Node node)
+        {
+            //TODO
+        }
+
         public void UpdateGlobalData(CustomGlobalData data) =>
             EngineNativeApi.UpdateGlobalData(data);
     }
