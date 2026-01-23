@@ -10,16 +10,13 @@ import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.IntVar
-import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.allocArray
-import kotlinx.cinterop.convert
 import kotlinx.cinterop.free
+import kotlinx.cinterop.set
 import kotlinx.cinterop.nativeHeap
 import kotlinx.cinterop.pointed
 import kotlinx.cinterop.readBytes
-import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.value
-import platform.posix.memcpy
 import kotlin.experimental.ExperimentalNativeApi
 
 var engine: Engine? = null
@@ -46,8 +43,8 @@ fun step(id: Int, rawSensing: CPointer<ByteVar>, dataSize: Int, outSize: CPointe
     val nodeState = engine?.step(id, sensingData)!!
     val byteArray = NodeState.ADAPTER.encode(nodeState)
     val pinnedBuffer = nativeHeap.allocArray<ByteVar>(byteArray.size)
-    byteArray.usePinned { pinned ->
-        memcpy(pinnedBuffer, pinned.addressOf(0), byteArray.size.convert())
+    byteArray.forEachIndexed { index, byte ->
+        pinnedBuffer[index] = byte
     }
     outSize.pointed.value = byteArray.size
     return pinnedBuffer
