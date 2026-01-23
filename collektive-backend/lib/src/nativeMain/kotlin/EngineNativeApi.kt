@@ -64,6 +64,20 @@ fun removeConnection(node1: Int, node2: Int): Boolean {
     return engine?.removeConnection(node1, node2)!!
 }
 
+@OptIn(ExperimentalNativeApi::class)
+@CName("add_node")
+fun addNode(id: Int): Boolean {
+    requireEngine()
+    return engine?.addNode(id)!!
+}
+
+@OptIn(ExperimentalNativeApi::class)
+@CName("remove_node")
+fun removeNode(id: Int): Boolean {
+    requireEngine()
+    return engine?.removeNode(id)!!
+}
+
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("update_global_data")
 fun updateGlobalData(dataPointer: CPointer<ByteVar>?, dataSize: Int)
