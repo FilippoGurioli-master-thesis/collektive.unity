@@ -10,6 +10,7 @@ namespace Collektive.Unity
     /// <summary>
     /// Handles the logic part of the simulation.
     /// </summary>
+    [RequireComponent(typeof(LinkManager))]
     public class SimulationManager : SingletonBehaviour<SimulationManager>
     {
         [SerializeField, ReadOnly, Tooltip("The total number of nodes in the simulation")]
@@ -22,13 +23,16 @@ namespace Collektive.Unity
         private bool simulationPaused = false;
 
         private List<Node> _nodes = new();
+        private LinkManager _linkManager;
 
         public GlobalData GlobalData { get; private set; }
 
         private void Awake()
         {
             var nodes = Object.FindObjectsByType<Node>(FindObjectsSortMode.None);
+            _linkManager = GetComponent<LinkManager>();
             _nodes.AddRange(nodes);
+            _linkManager.SetNodes(_nodes);
             totalNodes = _nodes.Count;
             GlobalData = new GlobalData { TotalNodes = nodes.Length, DeltaTime = deltaTime };
             EngineNativeApi.Initialize(GlobalData);
@@ -54,11 +58,17 @@ namespace Collektive.Unity
             Physics.Simulate(deltaTime);
         }
 
-        public bool AddConnection(int node1, int node2) =>
-            EngineNativeApi.AddConnection(node1, node2);
+        public bool AddConnection(int node1, int node2)
+        {
+            _linkManager.AddConnection(node1, node2);
+            return EngineNativeApi.AddConnection(node1, node2);
+        }
 
-        public bool RemoveConnection(int node1, int node2) =>
-            EngineNativeApi.RemoveConnection(node1, node2);
+        public bool RemoveConnection(int node1, int node2)
+        {
+            _linkManager.RemoveConnection(node1, node2);
+            return EngineNativeApi.RemoveConnection(node1, node2);
+        }
 
         public void UpdateGlobalData(CustomGlobalData data) =>
             EngineNativeApi.UpdateGlobalData(data);
