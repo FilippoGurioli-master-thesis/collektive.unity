@@ -1,4 +1,5 @@
 using System;
+using Collektive.Unity.Attributes;
 using Collektive.Unity.Schema;
 using UnityEngine;
 
@@ -9,6 +10,15 @@ namespace Collektive.Unity
     /// </summary>
     public abstract class Node : MonoBehaviour
     {
+        [SerializeField, ReadOnly]
+        private int id;
+
+        public int Id
+        {
+            get => id;
+            set => id = value;
+        }
+
         public Action<NodeState> OnStateReceived;
 
         public abstract SensorData Sense();

@@ -18,21 +18,33 @@ namespace Collektive.Unity
         [SerializeField, Tooltip("Period that passes between one cycle and the next one")]
         private float deltaTime = 0.02f;
 
+        [SerializeField, Tooltip("Set to true to pause simulation")]
+        private bool simulationPaused = false;
+
         private List<Node> _nodes = new();
+
+        public GlobalData GlobalData { get; private set; }
 
         private void Awake()
         {
             var nodes = Object.FindObjectsByType<Node>(FindObjectsSortMode.None);
             _nodes.AddRange(nodes);
             totalNodes = _nodes.Count;
-            EngineNativeApi.Initialize(
-                new GlobalData { TotalNodes = nodes.Length, DeltaTime = deltaTime }
-            );
+            GlobalData = new GlobalData { TotalNodes = nodes.Length, DeltaTime = deltaTime };
+            EngineNativeApi.Initialize(GlobalData);
+            for (var i = 0; i < _nodes.Count; i++)
+            {
+                _nodes[i].Id = i;
+                _nodes[i].name = $"node {i}";
+            }
             Physics.simulationMode = SimulationMode.Script;
+            Time.timeScale = 0f;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
+            if (simulationPaused)
+                return;
             foreach (var node in _nodes)
             {
                 var sensing = node.Sense();
