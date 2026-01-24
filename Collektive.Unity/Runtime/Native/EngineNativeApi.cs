@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Collektive.Unity.Data;
 using Collektive.Unity.Schema;
 using Google.Protobuf;
+using UnityEngine;
 
 namespace Collektive.Unity.Native
 {
@@ -106,6 +107,30 @@ namespace Collektive.Unity.Native
             {
                 handle.Free();
             }
+        }
+
+        //----------------------- logger ---------------------
+        private delegate void LogCallbackDelegate([MarshalAs(UnmanagedType.LPStr)] string message);
+
+        [DllImport(
+            LibName,
+            EntryPoint = "set_log_callback",
+            CallingConvention = CallingConvention.Cdecl
+        )]
+        private static extern void SetLogCallback(LogCallbackDelegate callback);
+
+        private static LogCallbackDelegate logDelegate;
+
+        public static void InitializeLogging()
+        {
+            logDelegate = UnityLogCallback;
+            SetLogCallback(logDelegate);
+        }
+
+        [AOT.MonoPInvokeCallback(typeof(LogCallbackDelegate))]
+        private static void UnityLogCallback(string message)
+        {
+            Debug.Log($"[Kotlin] {message}");
         }
     }
 }

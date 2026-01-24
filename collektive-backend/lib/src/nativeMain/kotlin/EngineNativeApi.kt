@@ -36,18 +36,26 @@ fun initialize(dataPointer: CPointer<ByteVar>?, dataSize: Int)
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("step")
-fun step(id: Int, rawSensing: CPointer<ByteVar>, dataSize: Int, outSize: CPointer<IntVar>): CPointer<ByteVar> {
-    requireEngine()
-    require(dataSize >= 0) { "Invalid data size." }
-    val sensingData = SensorData.ADAPTER.decode(rawSensing.readBytes(dataSize))
-    val nodeState = engine?.step(id, sensingData)!!
-    val byteArray = NodeState.ADAPTER.encode(nodeState)
-    val pinnedBuffer = nativeHeap.allocArray<ByteVar>(byteArray.size)
-    byteArray.forEachIndexed { index, byte ->
-        pinnedBuffer[index] = byte
+fun step(id: Int, rawSensing: CPointer<ByteVar>, dataSize: Int, outSize: CPointer<IntVar>): CPointer<ByteVar>? {
+    try
+    {
+        requireEngine()
+        require(dataSize >= 0) { "Invalid data size." }
+        val sensingData = SensorData.ADAPTER.decode(rawSensing.readBytes(dataSize))
+        val nodeState = engine?.step(id, sensingData)!!
+        val byteArray = NodeState.ADAPTER.encode(nodeState)
+        val pinnedBuffer = nativeHeap.allocArray<ByteVar>(byteArray.size)
+        byteArray.forEachIndexed { index, byte ->
+            pinnedBuffer[index] = byte
+        }
+        outSize.pointed.value = byteArray.size
+        return pinnedBuffer
+    } catch (e: Throwable)
+    {
+        log(e.message ?: "An error occurred during step with id $id")
+        log(e.stackTraceToString())
+        return null
     }
-    outSize.pointed.value = byteArray.size
-    return pinnedBuffer
 }
 
 @OptIn(ExperimentalNativeApi::class)
