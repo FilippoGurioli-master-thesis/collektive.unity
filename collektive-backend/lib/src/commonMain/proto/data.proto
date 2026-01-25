@@ -6,7 +6,6 @@ option java_package = "it.unibo.collektive.unity.data";
 option csharp_namespace = "Collektive.Unity.Data";
 
 message GlobalData {
-  int32 totalNodes = 1;
-  double deltaTime = 2;
-  CustomGlobalData customData = 3;
+  int32 seed = 1;
+  CustomGlobalData customData = 2;
 }

@@ -15,19 +15,14 @@ interface Engine {
     fun addConnection(node1: Int, node2: Int): Boolean
     fun removeConnection(node1: Int, node2: Int): Boolean
     fun updateGlobalData(data: CustomGlobalData)
+    fun addNode(id: Int): Boolean
+    fun removeNode(id: Int): Boolean
 }
 
 class EngineImpl(private val nm: NetworkManager, private var globalData: GlobalData, private val program: Aggregate<Int>.(SensorData) -> NodeState) : Engine {
 
     private var currentSensing: MutableMap<Int, SensorData> = mutableMapOf()
-    private val nodes: List<Collektive<Int, NodeState>> = (0 until globalData.totalNodes).map { id ->
-        val network = Network(id, nm)
-        Collektive(id, network) {
-            val sensorData = currentSensing[id]
-            require(sensorData != null) { "Sensor data should never be null here" }
-            return@Collektive program(sensorData)
-        }
-    }
+    private val nodes: MutableList<Collektive<Int, NodeState>> = mutableListOf()
 
     override fun step(id: Int, sensorData: SensorData): NodeState {
         currentSensing[id] = sensorData
@@ -39,4 +34,20 @@ class EngineImpl(private val nm: NetworkManager, private var globalData: GlobalD
     override fun removeConnection(node1: Int, node2: Int): Boolean = nm.removeConnection(node1, node2)
 
     override fun updateGlobalData(data: CustomGlobalData) { globalData = globalData.copy(customData = data) }
+
+    override fun addNode(id: Int): Boolean {
+        if (nodes.map { it.localId }.contains(id)) return false
+        val network = Network(id, nm)
+        return nodes.add(Collektive(id, network) {
+            val sensorData = currentSensing[id]
+            require(sensorData != null) { "Sensor data should never be null here" }
+            return@Collektive program(sensorData)
+        })
+    }
+
+    override fun removeNode(id: Int): Boolean {
+        if (!nodes.map { it.localId }.contains(id)) return false
+        nm.unregisterNode(id)
+        return nodes.remove(nodes.first { it.localId == id })
+    }
 }
