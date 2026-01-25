@@ -45,6 +45,10 @@ namespace Collektive.Unity
             OnStateReceived += Act;
         }
 
-        private void OnDisable() => OnStateReceived -= Act;
+        private void OnDisable()
+        {
+            SimulationManager.Instance.RemoveNode(this);
+            OnStateReceived -= Act;
+        }
     }
 }

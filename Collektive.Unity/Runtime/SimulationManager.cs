@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Collektive.Unity.Attributes;
 using Collektive.Unity.Data;
 using Collektive.Unity.Native;
@@ -91,6 +92,21 @@ namespace Collektive.Unity
             {
                 Debug.LogError($"Native Engine return false on adding node {id}");
                 return 0;
+            }
+        }
+
+        public bool RemoveNode(Node node)
+        {
+            InitIfNotPresent();
+            if (_nodes.Values.Contains(node) && EngineNativeApi.RemoveNode(node.Id))
+            {
+                _linkManager.RemoveAllConnectionsForNode(node);
+                return _nodes.Remove(node.Id);
+            }
+            else
+            {
+                Debug.LogError($"Native Engine return false on removing node {node.Id}");
+                return false;
             }
         }
 

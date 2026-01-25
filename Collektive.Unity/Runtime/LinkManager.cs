@@ -36,6 +36,18 @@ namespace Collektive.Unity
             lineRenderer.enabled = showLinks;
         }
 
+        public void RemoveAllConnectionsForNode(Node node)
+        {
+            var keysToRemove = new List<(Node, Node)>();
+            foreach (var key in _connections.Keys)
+            {
+                if (key.Item1 == node || key.Item2 == node)
+                    keysToRemove.Add(key);
+            }
+            foreach (var key in keysToRemove)
+                RemoveConnection(key.Item1, key.Item2);
+        }
+
         public void RemoveConnection(Node node1, Node node2)
         {
             var key = GetOrderedPair(node1, node2);
