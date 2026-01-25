@@ -36,6 +36,16 @@ namespace Collektive.Unity.Native
         )]
         public static extern bool RemoveConnection(int node1, int node2);
 
+        [DllImport(LibName, EntryPoint = "add_node", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool AddNode(int id);
+
+        [DllImport(
+            LibName,
+            EntryPoint = "remove_node",
+            CallingConvention = CallingConvention.Cdecl
+        )]
+        public static extern bool RemoveNode(int id);
+
         [DllImport(
             LibName,
             EntryPoint = "update_global_data",

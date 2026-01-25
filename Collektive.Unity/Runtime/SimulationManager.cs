@@ -38,10 +38,13 @@ namespace Collektive.Unity
             _nodes.AddRange(nodes);
             _linkManager.SetNodes(_nodes);
             totalNodes = _nodes.Count;
-            GlobalData = new GlobalData { TotalNodes = nodes.Length, DeltaTime = deltaTime };
+            GlobalData = new GlobalData { Seed = masterSeed };
             EngineNativeApi.Initialize(GlobalData);
             for (var i = 0; i < _nodes.Count; i++)
+            {
+                EngineNativeApi.AddNode(i);
                 _nodes[i].Init(i);
+            }
             Physics.simulationMode = SimulationMode.Script;
             Time.timeScale = 0f;
         }
