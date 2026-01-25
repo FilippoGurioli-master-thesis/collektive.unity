@@ -19,9 +19,7 @@ import kotlinx.cinterop.readBytes
 import kotlinx.cinterop.value
 import kotlin.experimental.ExperimentalNativeApi
 
-var engine: Engine? = null
-
-private fun requireEngine() = require(engine != null) { "The engine is null" }
+lateinit var engine: Engine
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("initialize")
@@ -37,10 +35,9 @@ fun initialize(dataPointer: CPointer<ByteVar>?, dataSize: Int)
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
 @CName("step")
 fun step(id: Int, rawSensing: CPointer<ByteVar>, dataSize: Int, outSize: CPointer<IntVar>): CPointer<ByteVar> {
-    requireEngine()
     require(dataSize >= 0) { "Invalid data size." }
     val sensingData = SensorData.ADAPTER.decode(rawSensing.readBytes(dataSize))
-    val nodeState = engine?.step(id, sensingData)!!
+    val nodeState = engine.step(id, sensingData)
     val byteArray = NodeState.ADAPTER.encode(nodeState)
     val pinnedBuffer = nativeHeap.allocArray<ByteVar>(byteArray.size)
     byteArray.forEachIndexed { index, byte ->
@@ -53,15 +50,25 @@ fun step(id: Int, rawSensing: CPointer<ByteVar>, dataSize: Int, outSize: CPointe
 @OptIn(ExperimentalNativeApi::class)
 @CName("add_connection")
 fun addConnection(node1: Int, node2: Int): Boolean {
-    requireEngine()
-    return engine?.addConnection(node1, node2)!!
+    return engine.addConnection(node1, node2)
 }
 
 @OptIn(ExperimentalNativeApi::class)
 @CName("remove_connection")
 fun removeConnection(node1: Int, node2: Int): Boolean {
-    requireEngine()
-    return engine?.removeConnection(node1, node2)!!
+    return engine.removeConnection(node1, node2)
+}
+
+@OptIn(ExperimentalNativeApi::class)
+@CName("add_node")
+fun addNode(id: Int): Boolean {
+    return engine.addNode(id)
+}
+
+@OptIn(ExperimentalNativeApi::class)
+@CName("remove_node")
+fun removeNode(id: Int): Boolean {
+    return engine.removeNode(id)
 }
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
@@ -69,7 +76,7 @@ fun removeConnection(node1: Int, node2: Int): Boolean {
 fun updateGlobalData(dataPointer: CPointer<ByteVar>?, dataSize: Int)
 {
     require(dataPointer != null) { "Invalid null pointer. Global data pointer should point to valid heap structure" }
-    engine?.updateGlobalData(CustomGlobalData.ADAPTER.decode(dataPointer.readBytes(dataSize)))
+    engine.updateGlobalData(CustomGlobalData.ADAPTER.decode(dataPointer.readBytes(dataSize)))
 }
 
 @OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
