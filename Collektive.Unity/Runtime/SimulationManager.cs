@@ -53,16 +53,16 @@ namespace Collektive.Unity
             Physics.Simulate(deltaTime);
         }
 
-        public bool AddConnection(int id1, int id2)
+        public bool AddConnection(Node node1, Node node2)
         {
-            _linkManager.AddConnection(_nodes[id1], _nodes[id2]);
-            return EngineNativeApi.AddConnection(id1, id2);
+            _linkManager.AddConnection(node1, node2);
+            return EngineNativeApi.AddConnection(node1.Id, node2.Id);
         }
 
-        public bool RemoveConnection(int id1, int id2)
+        public bool RemoveConnection(Node node1, Node node2)
         {
-            _linkManager.RemoveConnection(_nodes[id1], _nodes[id2]);
-            return EngineNativeApi.RemoveConnection(id1, id2);
+            _linkManager.RemoveConnection(node1, node2);
+            return EngineNativeApi.RemoveConnection(node1.Id, node2.Id);
         }
 
         public void UpdateGlobalData(CustomGlobalData data) =>

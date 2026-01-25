@@ -19,7 +19,7 @@ namespace Collektive.Unity.Example
             var otherNode = other.GetComponent<Node>();
             if (otherNode != null)
             {
-                SimulationManager.Instance.AddConnection(_node.Id, otherNode.Id);
+                SimulationManager.Instance.AddConnection(_node, otherNode);
             }
         }
 
@@ -28,7 +28,7 @@ namespace Collektive.Unity.Example
             var otherNode = other.GetComponent<Node>();
             if (otherNode != null)
             {
-                SimulationManager.Instance.RemoveConnection(_node.Id, otherNode.Id);
+                SimulationManager.Instance.RemoveConnection(_node, otherNode);
             }
         }
     }
