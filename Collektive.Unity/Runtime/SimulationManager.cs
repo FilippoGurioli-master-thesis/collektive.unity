@@ -28,23 +28,14 @@ namespace Collektive.Unity
         private List<Node> _nodes = new();
         private LinkManager _linkManager;
 
+        public List<Node> Nodes => new(_nodes);
         public GlobalData GlobalData { get; private set; }
-        public int MasterSeed => masterSeed;
 
         private void Awake()
         {
-            var nodes = Object.FindObjectsByType<Node>(FindObjectsSortMode.None);
             _linkManager = GetComponent<LinkManager>();
-            _nodes.AddRange(nodes);
-            _linkManager.SetNodes(_nodes);
-            totalNodes = _nodes.Count;
             GlobalData = new GlobalData { Seed = masterSeed };
             EngineNativeApi.Initialize(GlobalData);
-            for (var i = 0; i < _nodes.Count; i++)
-            {
-                EngineNativeApi.AddNode(i);
-                _nodes[i].Init(i);
-            }
             Physics.simulationMode = SimulationMode.Script;
             Time.timeScale = 0f;
         }
@@ -76,5 +67,20 @@ namespace Collektive.Unity
 
         public void UpdateGlobalData(CustomGlobalData data) =>
             EngineNativeApi.UpdateGlobalData(data);
+
+        public int AddNode(Node node)
+        {
+            var id = _nodes.Count;
+            if (EngineNativeApi.AddNode(id))
+            {
+                _nodes.Add(node);
+                return id;
+            }
+            else
+            {
+                Debug.LogError($"Native Engine return false on adding node {id}");
+                return 0;
+            }
+        }
     }
 }

@@ -16,10 +16,6 @@ namespace Collektive.Unity
 
         private Dictionary<(int, int), LineRenderer> _connections = new();
 
-        private List<Node> _nodes;
-
-        public void SetNodes(List<Node> nodes) => _nodes = nodes;
-
         public void AddConnection(int node1, int node2)
         {
             var key = GetOrderedPair(node1, node2);
@@ -71,10 +67,11 @@ namespace Collektive.Unity
 
         private void UpdateConnectionPosition(LineRenderer lineRenderer, int node1Id, int node2Id)
         {
-            if (_nodes == null || lineRenderer == null)
+            var nodes = SimulationManager.Instance.Nodes;
+            if (nodes == null || lineRenderer == null)
                 return;
-            var n1 = _nodes.Find(n => n.Id == node1Id);
-            var n2 = _nodes.Find(n => n.Id == node2Id);
+            var n1 = nodes.Find(n => n.Id == node1Id);
+            var n2 = nodes.Find(n => n.Id == node2Id);
             if (n1 != null && n2 != null)
             {
                 lineRenderer.SetPosition(0, n1.transform.position);

@@ -22,18 +22,19 @@ namespace Collektive.Unity
             private set => id = value;
         }
 
-        private void Start() => name = $"node + {Id}";
-
-        public void Init(int id)
+        private void Start()
         {
-            Id = id;
-            _prng = new Random(SimulationManager.Instance.MasterSeed + id);
+            Id = SimulationManager.Instance.AddNode(this);
+            name = $"node {Id}";
+            _prng = new Random(SimulationManager.Instance.GlobalData.Seed + Id);
+            Initialize();
         }
 
         public Action<NodeState> OnStateReceived;
 
         public abstract SensorData Sense();
         protected abstract void Act(NodeState state);
+        protected abstract void Initialize();
 
         protected float GetNextRandom() => (float)_prng.NextDouble();
 
