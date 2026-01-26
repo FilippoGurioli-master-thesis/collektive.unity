@@ -66,14 +66,28 @@ namespace Collektive.Unity
 
         public bool AddConnection(Node node1, Node node2)
         {
-            _linkManager.AddConnection(node1, node2);
-            return EngineNativeApi.AddConnection(node1.Id, node2.Id);
+            var sub1 = Subscribe(node1, node2);
+            var sub2 = Subscribe(node2, node1);
+            return sub1 && sub2;
         }
 
         public bool RemoveConnection(Node node1, Node node2)
         {
-            _linkManager.RemoveConnection(node1, node2);
-            return EngineNativeApi.RemoveConnection(node1.Id, node2.Id);
+            var unsub1 = Unsubscribe(node1, node2);
+            var unsub2 = Unsubscribe(node2, node1);
+            return unsub1 && unsub2;
+        }
+
+        public bool Subscribe(Node node1, Node node2)
+        {
+            _linkManager.AddDirectedConnection(node1, node2);
+            return EngineNativeApi.Subscribe(node1.Id, node2.Id);
+        }
+
+        public bool Unsubscribe(Node node1, Node node2)
+        {
+            _linkManager.RemoveDirectedConnection(node1, node2);
+            return EngineNativeApi.Unsubscribe(node1.Id, node2.Id);
         }
 
         public void UpdateGlobalData(CustomGlobalData data) =>

@@ -12,49 +12,64 @@ namespace Collektive.Unity
         private float lineWidth = 0.05f;
 
         [SerializeField]
-        private Color linkColor = Color.cyan;
+        private Color bidirectionalLinkColor = Color.cyan;
 
-        private Dictionary<(Node, Node), LineRenderer> _connections = new();
+        [SerializeField]
+        private Color monodirectionalLinkColor = Color.red;
 
-        public void AddConnection(Node node1, Node node2)
+        private Dictionary<(Node from, Node to), LineRenderer> _connections = new();
+
+        public void AddDirectedConnection(Node from, Node to)
         {
-            var key = GetOrderedPair(node1, node2);
+            var key = (from, to);
             if (_connections.ContainsKey(key))
                 return;
-            var lineObj = new GameObject($"link {node1}-{node2}");
+            var color = monodirectionalLinkColor;
+            if (_connections.TryGetValue((to, from), out var lr))
+            {
+                lr.startColor = bidirectionalLinkColor;
+                lr.endColor = bidirectionalLinkColor;
+                color = bidirectionalLinkColor;
+            }
+            var lineObj = new GameObject($"link {from}->{to}");
             lineObj.transform.SetParent(transform);
             var lineRenderer = lineObj.AddComponent<LineRenderer>();
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            lineRenderer.startColor = linkColor;
-            lineRenderer.endColor = linkColor;
+            lineRenderer.startColor = color;
+            lineRenderer.endColor = color;
             lineRenderer.startWidth = lineWidth;
             lineRenderer.endWidth = lineWidth;
             lineRenderer.positionCount = 2;
             lineRenderer.useWorldSpace = true;
-            UpdateConnectionPosition(lineRenderer, node1, node2);
+            UpdateConnectionPosition(lineRenderer, from, to);
             _connections[key] = lineRenderer;
             lineRenderer.enabled = showLinks;
         }
 
         public void RemoveAllConnectionsForNode(Node node)
         {
-            var keysToRemove = new List<(Node, Node)>();
+            var keysToRemove = new List<(Node from, Node to)>();
             foreach (var key in _connections.Keys)
             {
-                if (key.Item1 == node || key.Item2 == node)
+                if (key.from == node || key.to == node)
                     keysToRemove.Add(key);
             }
             foreach (var key in keysToRemove)
-                RemoveConnection(key.Item1, key.Item2);
+                RemoveDirectedConnection(key.from, key.to);
         }
 
-        public void RemoveConnection(Node node1, Node node2)
+        public void RemoveDirectedConnection(Node from, Node to)
         {
-            var key = GetOrderedPair(node1, node2);
+            var key = (from, to);
             if (_connections.TryGetValue(key, out LineRenderer lineRenderer))
             {
                 Destroy(lineRenderer.gameObject);
                 _connections.Remove(key);
+                if (_connections.TryGetValue((to, from), out var lr))
+                {
+                    lr.startColor = monodirectionalLinkColor;
+                    lr.endColor = monodirectionalLinkColor;
+                }
             }
         }
 
@@ -83,9 +98,6 @@ namespace Collektive.Unity
             lineRenderer.SetPosition(1, node2.transform.position);
         }
 
-        private (Node, Node) GetOrderedPair(Node node1, Node node2) =>
-            node1.Id < node2.Id ? (node1, node2) : (node2, node1);
-
         public void SetShowLinks(bool show)
         {
             showLinks = show;
@@ -104,8 +116,8 @@ namespace Collektive.Unity
                 {
                     if (lineRenderer != null)
                     {
-                        lineRenderer.startColor = linkColor;
-                        lineRenderer.endColor = linkColor;
+                        lineRenderer.startColor = bidirectionalLinkColor;
+                        lineRenderer.endColor = bidirectionalLinkColor;
                         lineRenderer.startWidth = lineWidth;
                         lineRenderer.endWidth = lineWidth;
                         lineRenderer.enabled = showLinks;

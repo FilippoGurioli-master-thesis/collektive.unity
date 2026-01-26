@@ -22,19 +22,15 @@ namespace Collektive.Unity.Native
             out int outputSize
         );
 
-        [DllImport(
-            LibName,
-            EntryPoint = "add_connection",
-            CallingConvention = CallingConvention.Cdecl
-        )]
-        public static extern bool AddConnection(int node1, int node2);
+        [DllImport(LibName, EntryPoint = "subscribe", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool Subscribe(int node1, int node2);
 
         [DllImport(
             LibName,
-            EntryPoint = "remove_connection",
+            EntryPoint = "unsubscribe",
             CallingConvention = CallingConvention.Cdecl
         )]
-        public static extern bool RemoveConnection(int node1, int node2);
+        public static extern bool Unsubscribe(int node1, int node2);
 
         [DllImport(LibName, EntryPoint = "add_node", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool AddNode(int id);
