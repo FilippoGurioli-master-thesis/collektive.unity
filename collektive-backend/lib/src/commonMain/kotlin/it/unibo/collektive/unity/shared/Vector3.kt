@@ -11,10 +11,10 @@ fun Vector3.distanceTo(other: Vector3): Float =
         (this.x - other.x).pow(2) + (this.y - other.y).pow(2) + (this.z - other.z).pow(2)
     )
 
-/**
- * Computes the geometric distance between the passed vectors.
- */
 object Vector3Helper {
+    /**
+     * Computes the geometric distance between the passed vectors.
+     */
     fun distance(a: Vector3, b: Vector3) =
         a.distanceTo(b)
 }

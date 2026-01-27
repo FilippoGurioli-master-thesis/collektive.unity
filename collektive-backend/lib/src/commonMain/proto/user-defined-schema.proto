@@ -6,13 +6,12 @@ option java_package = "it.unibo.collektive.unity.schema";
 option csharp_namespace = "Collektive.Unity.Schema";
 
 message NodeState {
-  double gradient = 1;
-  Vector3 position = 2;
+  Vector3 targetPosition = 1;
 }
 
 message SensorData {
-  Vector3 position = 1;
-  bool isSource = 2;
+  double sourceIntensity = 1;
+  Vector3 currentPosition = 2;
 }
 
 message CustomGlobalData {

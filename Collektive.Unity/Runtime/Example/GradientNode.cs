@@ -24,21 +24,21 @@ namespace Collektive.Unity.Example
         public override SensorData Sense() =>
             new SensorData
             {
-                Position = new Shared.Vector3
-                {
-                    X = transform.position.x,
-                    Y = transform.position.y,
-                    Z = transform.position.z,
-                },
-                IsSource = isSource,
+                // Position = new Shared.Vector3
+                // {
+                //     X = transform.position.x,
+                //     Y = transform.position.y,
+                //     Z = transform.position.z,
+                // },
+                // IsSource = isSource,
             };
 
         protected override void Act(NodeState state)
         {
-            gradient = state.Gradient;
-            var t = Mathf.InverseLerp(0f, 30f, (float)gradient);
-            var color = isSource ? Color.white : Color.HSVToRGB(t, 1f, 1f);
-            _renderer.material.color = color;
+            // gradient = state.Gradient;
+            // var t = Mathf.InverseLerp(0f, 30f, (float)gradient);
+            // var color = isSource ? Color.white : Color.HSVToRGB(t, 1f, 1f);
+            // _renderer.material.color = color;
         }
     }
 }
