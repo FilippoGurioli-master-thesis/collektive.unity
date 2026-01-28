@@ -12,6 +12,7 @@ message NodeState {
 message SensorData {
   double sourceIntensity = 1;
   Vector3 currentPosition = 2;
+  repeated Vector3 obstacles = 3;
 }
 
 message CustomGlobalData {

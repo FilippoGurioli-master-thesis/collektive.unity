@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Collektive.Unity.Example
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(ObstacleSensor))]
     public class SourceSensor : Node
     {
         [Header("Input")]
@@ -31,15 +31,17 @@ namespace Collektive.Unity.Example
         private Vector3 targetPosition;
 
         private Rigidbody _rb;
+        private ObstacleSensor _obstacleSensor;
 
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
+            _obstacleSensor = GetComponent<ObstacleSensor>();
         }
 
         public override SensorData Sense()
         {
-            return new SensorData
+            var data = new SensorData
             {
                 SourceIntensity = SenseField(),
                 CurrentPosition = new Shared.Vector3
@@ -49,6 +51,19 @@ namespace Collektive.Unity.Example
                     Z = transform.position.z,
                 },
             };
+            foreach (var obstacle in _obstacleSensor.Sense())
+            {
+                data.Obstacles.Add(
+                    new Shared.Vector3
+                    {
+                        X = obstacle.x,
+                        Y = obstacle.y,
+                        Z = obstacle.z,
+                    }
+                );
+            }
+
+            return data;
         }
 
         // gaussian model V(d) = I * e^(-d^2/(2 * sigma^2))
