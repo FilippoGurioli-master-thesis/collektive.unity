@@ -5,29 +5,25 @@ import it.unibo.collektive.aggregate.api.neighboring
 import it.unibo.collektive.unity.schema.NodeState
 import it.unibo.collektive.unity.schema.SensorData
 import it.unibo.collektive.unity.shared.Vector3Helper
-import it.unibo.collektive.unity.shared.minus
-import it.unibo.collektive.unity.shared.times
 import it.unibo.collektive.unity.shared.div
+import it.unibo.collektive.unity.shared.minus
 import it.unibo.collektive.unity.shared.plus
+import it.unibo.collektive.unity.shared.times
 import kotlin.math.*
 
-fun Aggregate<Int>.entrypoint(sensorData: SensorData): NodeState{
+fun Aggregate<Int>.entrypoint(sensorData: SensorData): NodeState {
   val neighbors = neighboring(sensorData).neighbors.sequence
-  if (neighbors.none())
-    return NodeState(sensorData.currentPosition)
-  val weightedVectorSum = neighbors.fold(Vector3Helper.zero()) { acc, nbr ->
-    val relativeVector = nbr.value.currentPosition - sensorData.currentPosition
-    val weight = nbr.value.sourceIntensity.pow(2)
-    acc + (relativeVector * weight.toFloat())
-  }
-  val totalWeight = neighbors.sumOf { it.value.sourceIntensity.pow(2) } + 
-      sensorData.sourceIntensity.pow(2)
-  val averageDisplacement = if (totalWeight > 0) {
-    weightedVectorSum / totalWeight.toFloat()
+  val gradientDirection =
+          neighbors.fold(Vector3Helper.zero()) { acc, nbr ->
+            val relativeVector = nbr.value.currentPosition - sensorData.currentPosition
+            val intensityDiff = nbr.value.sourceIntensity - sensorData.sourceIntensity
+            acc + (relativeVector * intensityDiff.toFloat())
+          }
+  return if (gradientDirection == Vector3Helper.zero()) {
+    NodeState(sensorData.currentPosition)
   } else {
-    Vector3Helper.zero()
+    NodeState(sensorData.currentPosition + gradientDirection)
   }
-  return NodeState(sensorData.currentPosition + averageDisplacement)
 }
     // NodeState(
     //     neighboring(sensorData)
