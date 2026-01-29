@@ -64,12 +64,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-24.04
+          - os: ubuntu-24.04  # currently the backend is only supported on linux (.so file)
             targetPlatform: StandaloneLinux64
-          - os: windows-2025
-            targetPlatform: StandaloneWindows64
-          - os: macOS-15
-            targetPlatform: StandaloneOSX
+          # - os: windows-2025
+          #   targetPlatform: StandaloneWindows64
+          # - os: macOS-15
+          #   targetPlatform: StandaloneOSX
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
