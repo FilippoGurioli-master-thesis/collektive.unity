@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Collektive.Unity
+namespace Collektive.Unity.Utils
 {
     /// <summary>
     /// Singleton monobehaviour. Allows only one intance in the scene and it becomes DontDestroyOnLoad
