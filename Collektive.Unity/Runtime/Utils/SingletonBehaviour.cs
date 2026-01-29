@@ -35,5 +35,12 @@ namespace Collektive.Unity.Utils
                 }
             }
         }
+
+#if UNITY_EDITOR
+        public static void ClearInstance()
+        {
+            _instance = null;
+        }
+#endif
     }
 }
