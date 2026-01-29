@@ -20,7 +20,7 @@ namespace Collektive.Unity.Example
         [SerializeField]
         private float intensity = 100;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Steepness of the courve of source propagation")]
         private float sigma = 10;
 
         [Header("Output")]
