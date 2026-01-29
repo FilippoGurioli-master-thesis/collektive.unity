@@ -27,39 +27,28 @@ permissions:
   checks: write
 
 jobs:
-  check-template:
-    name: Check for .template file
+  backend:
+    name: Backend Build & Test
     runs-on: ubuntu-24.04
-    outputs:
-      is_template: ${{ steps.check.outputs.is_template }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Check existence of .template
-        id: check
-        run: |
-          if [ -f ".template" ]; then
-            echo "is_template=true" >> $GITHUB_OUTPUT
-          else
-            echo "is_template=false" >> $GITHUB_OUTPUT
-          fi
 
-  # launch-init:
-  #   name: Launch init script to see if it works
-  #   runs-on: ubuntu-24.04
-  #   needs: check-template
-  #   if: needs.check-template.outputs.is_template == 'true'
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v6
-  #     - name: Launch init script
-  #       run: ./init.sh
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Build and Test Backend
+        working-directory: ./collektive-backend
+        run: ./gradlew build test
 
   build:
     name: Build for ${{ matrix.targetPlatform }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    needs: check-template
-    if: needs.check-template.outputs.is_template == 'false'
+    needs: backend
     strategy:
       fail-fast: false
       matrix:
@@ -91,8 +80,7 @@ jobs:
 
   test:
     name: Tests
-    needs: check-template
-    if: needs.check-template.outputs.is_template == 'false'
+    needs: build
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
@@ -179,7 +167,7 @@ jobs:
 
   sign:
     name: Sign Artifact
-    needs: check-template
+    needs: test
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -213,15 +201,11 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-24.04
-    needs: [check-template, sign, sonar-analysis]
+    needs: [sign, sonar-analysis]
     if: |
       always() &&
       (github.event_name == 'push' &&
-      github.ref == 'refs/heads/main') &&
-      (
-        (needs.check-template.outputs.is_template == 'true' && needs.sign.result == 'success' && needs.sonar-analysis.result == 'skipped') ||
-        (needs.check-template.outputs.is_template == 'false' && needs.sign.result == 'success' && needs.sonar-analysis.result == 'success')
-      )
+      github.ref == 'refs/heads/main')
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -246,10 +230,7 @@ jobs:
 
   documentation:
     name: Documentation
-    needs: [check-template, release]
-    if: |
-      always() &&
-      (needs.release.result == 'success' || needs.check-template.outputs.is_template == 'true')
+    needs: release
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
