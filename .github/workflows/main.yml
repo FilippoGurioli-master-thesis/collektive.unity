@@ -43,7 +43,14 @@ jobs:
 
       - name: Build and Test Backend
         working-directory: ./collektive-backend
-        run: ./gradlew build allTests
+        run: ./gradlew build allTests --info
+
+      - name: Upload Build Reports on Failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: backend-reports
+          path: ./collektive-backend/build/reports/
 
   build:
     name: Build for ${{ matrix.targetPlatform }} on ${{ matrix.os }}
