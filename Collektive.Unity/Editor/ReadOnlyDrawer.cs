@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using Collektive.Unity.Attributes;
 using UnityEditor;
 using UnityEngine;
@@ -20,3 +21,4 @@ namespace Collektive.Unity.Editor
         }
     }
 }
+#endif
