@@ -144,20 +144,20 @@ jobs:
           path: ./Sandbox.Collektive.Unity/Library
           key: Library-test-${{ hashFiles('**/ProjectSettings/**') }}
       - name: Generate Solution
-        uses: game-ci/unity-command@v4
+        uses: game-ci/unity-builder@v4
         with:
           projectPath: ./Sandbox.Collektive.Unity
-          command: -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+          buildMethod: UnityEditor.SyncVS.SyncSolution
       - name: Download Test Results
         uses: actions/download-artifact@v7
         with:
-          name: Test-Results
+          name: Test results
           path: artifacts
       - name: Download Coverage Results
         uses: actions/download-artifact@v7
         with:
-          name: Coverage-Results
-          path: coverage-results
+          name: Coverage results
+          path: CodeCoverage
       - name: SonarQube Begin
         run: |
           dotnet tool run dotnet-sonarscanner begin \
