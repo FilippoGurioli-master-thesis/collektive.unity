@@ -18,7 +18,14 @@ namespace Collektive.Unity
         [SerializeField, ReadOnly, Tooltip("The total number of nodes in the simulation")]
         private int totalNodes;
 
-        [SerializeField, Tooltip("Period that passes between one cycle and the next one")]
+        [SerializeField, ReadOnly, Tooltip("Accumulated timestep")]
+        private float accumulator;
+
+        [
+            SerializeField,
+            Tooltip("Period that passes between one cycle and the next one"),
+            Range(0.001f, MAX_TIMESTEP)
+        ]
         private float deltaTime = 0.02f;
 
         [SerializeField, Tooltip("Set to true to pause global simulation")]
@@ -32,6 +39,7 @@ namespace Collektive.Unity
         private bool _isEngineInit = false;
         private int _counter = 0;
         private IEngine _engine;
+        private const float MAX_TIMESTEP = 0.3f;
 
         public GlobalData GlobalData { get; private set; }
 
@@ -46,7 +54,6 @@ namespace Collektive.Unity
             _engine ??= new EngineNativeApi();
             InitIfNotPresent();
             Physics.simulationMode = SimulationMode.Script;
-            Time.timeScale = 0f;
         }
 
         private void InitIfNotPresent()
@@ -62,6 +69,16 @@ namespace Collektive.Unity
         {
             if (globalSimulationPaused)
                 return;
+            accumulator = Mathf.Min(accumulator + Time.unscaledDeltaTime, MAX_TIMESTEP + 0.1f);
+            while (deltaTime <= accumulator)
+            {
+                SimulationStep();
+                accumulator -= deltaTime;
+            }
+        }
+
+        private void SimulationStep()
+        {
             foreach (var (id, node) in _nodes)
             {
                 var sensing = node.Sense();

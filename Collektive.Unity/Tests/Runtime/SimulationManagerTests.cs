@@ -107,7 +107,7 @@ namespace Collektive.Unity.Tests
         }
 
         [Test]
-        public void AddConnection_CallsSubscribeTwice()
+        public void AddConnectionCallsSubscribeTwice()
         {
             var n1 = new GameObject().AddComponent<NodeTests.TestNode>();
             var n2 = new GameObject().AddComponent<NodeTests.TestNode>();
@@ -116,7 +116,7 @@ namespace Collektive.Unity.Tests
         }
 
         [Test]
-        public void RemoveConnection_CallsUnsubscribeTwice()
+        public void RemoveConnectionCallsUnsubscribeTwice()
         {
             var n1 = new GameObject().AddComponent<NodeTests.TestNode>();
             var n2 = new GameObject().AddComponent<NodeTests.TestNode>();
@@ -125,7 +125,7 @@ namespace Collektive.Unity.Tests
         }
 
         [Test]
-        public void UpdateGlobalData_PassesDataToEngine()
+        public void UpdateGlobalDataPassesDataToEngine()
         {
             var data = new CustomGlobalData();
             _manager.UpdateGlobalData(data);
@@ -133,7 +133,7 @@ namespace Collektive.Unity.Tests
         }
 
         [UnityTest]
-        public IEnumerator Update_StepsEngine_WhenNotPaused()
+        public IEnumerator UpdateStepsEngineWhenNotPaused()
         {
             var nodeGo = new GameObject();
             var node = nodeGo.AddComponent<NodeTests.TestNode>();
@@ -146,7 +146,7 @@ namespace Collektive.Unity.Tests
         }
 
         [Test]
-        public void Awake_ConfiguresUnityPhysicsAndTime()
+        public void AwakeConfiguresUnityPhysicsAndTime()
         {
             Assert.AreEqual(SimulationMode.Script, Physics.simulationMode);
             Assert.AreEqual(0f, Time.timeScale);
