@@ -213,7 +213,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-24.04
-    needs: [sign, sonar-analysis]
+    needs: [sign] #, sonar-analysis]
     if: |
       always() &&
       (github.event_name == 'push' &&
