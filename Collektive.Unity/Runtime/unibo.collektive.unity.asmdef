@@ -2,8 +2,8 @@
     "name": "unibo.collektive.unity",
     "rootNamespace": "Collektive.Unity",
     "references": [
-        "GUID:0d106aecb695a314b8880af9bc16ec1a",
-        "GUID:c5f5cf1a3d4f7b645938cd5e9e03668f"
+      "Google.Protobuf",
+      "Unity.Protobuf.CodeGen"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
