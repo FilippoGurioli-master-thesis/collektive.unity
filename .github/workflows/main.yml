@@ -103,7 +103,7 @@ jobs:
       - uses: game-ci/unity-test-runner@v4
         id: tests
         with:
-          packageMode: true
+          packageMode: false # try set package mode to false and pass unity project path instead of package path see if it works
           projectPath: Sandbox.Collektive.Unity
           unityVersion: '6000.2.15f1'
           testMode: All
