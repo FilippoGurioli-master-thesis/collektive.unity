@@ -122,61 +122,6 @@ jobs:
           name: Coverage results
           path: ${{ steps.tests.outputs.coveragePath }}
 
-  # sonar-analysis:
-  #   name: SonarQube Analysis
-  #   needs: test
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v6
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Setup .NET
-  #       uses: actions/setup-dotnet@v5
-  #       with:
-  #         dotnet-version: "8.x"
-  #     - name: Restore local tools
-  #       run: dotnet tool restore
-  #     - name: Cache Library
-  #       uses: actions/cache@v5
-  #       with:
-  #         path: ./Sandbox.Collektive.Unity/Library
-  #         key: Library-test-${{ hashFiles('**/ProjectSettings/**') }}
-  #     - name: Generate Solution
-  #       uses: game-ci/unity-builder@v4
-  #       with:
-  #         projectPath: ./Sandbox.Collektive.Unity
-  #         buildMethod: UnityEditor.SyncVS.SyncSolution
-  #     - name: Download Test Results
-  #       uses: actions/download-artifact@v7
-  #       with:
-  #         name: Test results
-  #         path: artifacts
-  #     - name: Download Coverage Results
-  #       uses: actions/download-artifact@v7
-  #       with:
-  #         name: Coverage results
-  #         path: CodeCoverage
-  #     - name: SonarQube Begin
-  #       run: |
-  #         dotnet tool run dotnet-sonarscanner begin \
-  #           /k:"unibo_Collektive.Unity" \
-  #           /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" \
-  #           /d:sonar.token="${{ env.SONAR_TOKEN }}" \
-  #           /s:"$GITHUB_WORKSPACE/sonar-project.properties"
-  #     - name: Build Unity Solution
-  #       run: dotnet build ./Sandbox.Collektive.Unity/*.sln
-  #     - name: SonarQube End
-  #       run: |
-  #         dotnet tool run dotnet-sonarscanner end \
-  #           /d:sonar.token="${{ env.SONAR_TOKEN }}"
-  #     - name: SonarQube Quality Gate check
-  #       uses: sonarsource/sonarqube-quality-gate-action@v1
-  #       timeout-minutes: 5
-  #       env:
-  #         SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
-  #         SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-
   sign:
     name: Sign Artifact
     needs: test
