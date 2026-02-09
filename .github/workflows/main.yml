@@ -189,11 +189,7 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Create package archive (Package)
-        if: needs.check-template.outputs.is_template == 'false'
         run: zip -r package.zip ./Collektive.Unity
-      - name: Create package archive (Template)
-        if: needs.check-template.outputs.is_template == 'true'
-        run: zip -r package.zip .
       - name: Generate SHA256 digest
         run: sha256sum package.zip > package.zip.sha256
       - name: Sign digest
@@ -204,7 +200,7 @@ jobs:
       - name: Upload signed artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: signed-${{ needs.check-template.outputs.is_template == 'true' && 'template' || 'upm-package' }}
+          name: signed-upm-package
           path: |
             package.zip
             package.zip.sha256
