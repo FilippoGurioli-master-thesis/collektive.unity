@@ -4,7 +4,7 @@ let config = require("semantic-release-preconfigured-conventional-commits");
 
 config.plugins.push(
   ["@semantic-release/exec", {
-    prepareCmd: "dotnet tool run dotnet-script .automation/UpdateUnityPackageVersion.js ${nextRelease.version}"
+    prepareCmd: "dotnet tool run dotnet-script .automation/UpdateUnityPackageVersion.csx ${nextRelease.version}"
   }],
   ["@semantic-release/changelog", {
     changelogFile: "Collektive.Unity/CHANGELOG.md"
