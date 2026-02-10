@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/FilippoGurioli-master-thesis/unity-package-template.git"
+    "url": "git+ssh://git@github.com/FilippoGurioli-master-thesis/collektive.unity.git"
   },
   "license": "MIT",
   "author": "Filippo Gurioli",
