@@ -29,7 +29,7 @@ kotlin {
             dependencies {
                 implementation("it.unibo.collektive:collektive-dsl:27.3.3")
                 implementation("it.unibo.collektive:collektive-stdlib:27.4.0")
-                implementation("com.squareup.wire:wire-runtime:5.3.11")
+                implementation("com.squareup.wire:wire-runtime:5.4.0")
             }
         }
         val commonTest by getting {
