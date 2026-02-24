@@ -1,3 +1,13 @@
+## [1.2.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.1.2...1.2.0) (2026-02-24)
+
+### Features
+
+* add compatibility with mac os ([2cca965](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/2cca965734bbae80355f7b26116a6b2f95600c6b))
+
+### General maintenance
+
+* fine tune to have better simulation ([7948c11](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/7948c11f7b8e266d9bf6257889d5b1412bff8b2b))
+
 ## [1.1.2](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.1.1...1.1.2) (2026-02-20)
 
 ### Bug Fixes
