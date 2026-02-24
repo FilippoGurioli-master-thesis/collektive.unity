@@ -13,16 +13,27 @@ namespace Collektive.Unity.Editor
         private static readonly string KotlinProjectPath = Path.Combine("..", "collektive-backend");
 
         private static string GradleExecutable =>
-            Path.Combine(
-                KotlinProjectPath,
-                RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "gradlew.bat" : "gradlew"
-            );
+            Path.Combine(KotlinProjectPath, IsWindows ? "gradlew.bat" : "gradlew");
 
         private const string GradleTask = "assemble";
         private static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        private static bool IsMac => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
         private static string LibFileName =>
-            IsWindows ? "collektive_backend.dll" : "libcollektive_backend.so";
-        private static string KotlinTargetName => IsWindows ? "windows" : "linux";
+            IsWindows ? "collektive_backend.dll"
+            : IsMac ? "libcollektive_backend.dylib"
+            : "libcollektive_backend.so";
+
+        private static string KotlinTargetName =>
+            IsWindows ? "windows"
+            : IsMac
+                ? (
+                    RuntimeInformation.ProcessArchitecture == Architecture.Arm64
+                        ? "macosArm64"
+                        : "macosX64"
+                )
+            : "linux";
+
         private static string SourceLibPath =>
             Path.Combine(
                 KotlinProjectPath,
@@ -31,7 +42,13 @@ namespace Collektive.Unity.Editor
                 "bin",
                 KotlinTargetName,
                 "releaseShared",
-                (IsWindows ? "" : "lib") + "collektive_backend" + (IsWindows ? ".dll" : ".so")
+                (IsWindows ? "" : "lib")
+                    + "collektive_backend"
+                    + (
+                        IsWindows ? ".dll"
+                        : IsMac ? ".dylib"
+                        : ".so"
+                    )
             );
 
         private static string UnityPluginPath =>

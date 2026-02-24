@@ -22,6 +22,12 @@ kotlin {
     mingwX64("windows") {
         binaries { sharedLib { baseName = "collektive_backend" } }
     }
+    macosX64("macosX64") {
+        binaries { sharedLib { baseName = "collektive_backend" } }
+    }
+    macosArm64("macosArm64") {
+        binaries { sharedLib { baseName = "collektive_backend" } }
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -35,6 +41,8 @@ kotlin {
         }
         val linuxMain by getting { dependsOn(nativeMain) }
         val windowsMain by getting { dependsOn(nativeMain) }
+        val macosX64Main by getting { dependsOn(nativeMain) }
+        val macosArm64Main by getting { dependsOn(nativeMain) }
 
         val commonTest by getting {
             dependencies {
@@ -48,6 +56,12 @@ kotlin {
             dependsOn(nativeTest)
         }
         val windowsTest by getting {
+            dependsOn(nativeTest)
+        }
+        val macosX64Test by getting {
+            dependsOn(nativeTest)
+        }
+        val macosArm64Test by getting {
             dependsOn(nativeTest)
         }
     }
