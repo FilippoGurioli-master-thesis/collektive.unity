@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Collektive.Unity.Attributes;
 using Collektive.Unity.Native;
-using Collektive.Unity.Schema;
 using Collektive.Unity.Utils;
 using UnityEngine;
 

@@ -1,6 +1,5 @@
 using Collektive.Unity.Attributes;
 using Collektive.Unity.Schema;
-using Collektive.Unity.Shared;
 using UnityEngine;
 
 namespace Collektive.Unity.Example

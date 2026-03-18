@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Collektive.Unity.Schema;
 using Google.Protobuf;
