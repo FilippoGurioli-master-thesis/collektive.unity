@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.3.0...1.3.1) (2026-03-19)
+
+### Bug Fixes
+
+* correct all compile time errors ([533226d](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/533226db925d1f9da0ebc34605eb12502c75d71b))
+
 ## [1.3.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.2.0...1.3.0) (2026-03-19)
 
 ### Features
