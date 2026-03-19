@@ -1,3 +1,17 @@
+## [1.3.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.2.0...1.3.0) (2026-03-19)
+
+### Features
+
+* complete node sense and act methods along with i sensor and i actuator design ([49057ae](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/49057ae798f71e0ffa68ba85035fea828291c248))
+* create collektive node component and node class ([acb80a6](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/acb80a6185799831f1a9bf5524472727fdb7be33))
+* create new backend wrapper in unity ([eb130b4](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/eb130b494174e7655c62b84f7d0274a70e58aaf6))
+
+### General maintenance
+
+* add a todo ([ed88fb2](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/ed88fb2b5bdae2eb111726dc11cc2ce6135c5fcf))
+* configure git lfs ([a009693](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/a009693e53b53d7a760b0179cb6c43f05c6d58a0))
+* **wip:** work on creating the new version of node ([d38221a](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/d38221a9fbb74123d526bdd04a3f8fe53d5daa80))
+
 ## [1.2.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.1.2...1.2.0) (2026-02-24)
 
 ### Features
