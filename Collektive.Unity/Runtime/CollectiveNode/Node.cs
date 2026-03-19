@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Collektive.Unity.CollectiveNode
 {
-    [RequireComponent(typeof(CollektiveNodeComponent))]
+    [RequireComponent(typeof(CollektiveNodeComponent), typeof(NodeScheduler))]
     public class Node : MonoBehaviour
     {
         [Header("Configuration")]
@@ -26,10 +26,12 @@ namespace Collektive.Unity.CollectiveNode
         private List<ISensor> _sensors = new();
         private List<IActuator> _actuators = new();
         private CollektiveNodeComponent _nodeComponent;
+        private INodeScheduler _scheduler;
 
         private void Awake()
         {
             _nodeComponent = GetComponent<CollektiveNodeComponent>();
+            _scheduler = GetComponent<INodeScheduler>();
             if (automaticComponentsDetection)
             {
                 sensors.Clear();
@@ -41,9 +43,14 @@ namespace Collektive.Unity.CollectiveNode
             }
             _sensors = sensors.Select(s => s.Value).ToList();
             _actuators = actuators.Select(a => a.Value).ToList();
+            _scheduler.Cycle += Cycle;
         }
 
-        public SensorData Sense()
+        private void OnDestroy() => _scheduler.Cycle -= Cycle;
+
+        private void Cycle() => Act(_nodeComponent.Node.Compute(Sense()));
+
+        private SensorData Sense()
         {
             var data = new SensorData();
             foreach (var sensor in _sensors)
@@ -51,12 +58,7 @@ namespace Collektive.Unity.CollectiveNode
             return data;
         }
 
-        public void Compute()
-        {
-            //TODO
-        }
-
-        public void Act(ActuatorData data)
+        private void Act(ActuatorData data)
         {
             foreach (var actuator in _actuators)
                 actuator.Act(data);
