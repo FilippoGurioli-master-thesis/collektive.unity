@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.3.1...1.4.0) (2026-03-19)
+
+### Features
+
+* create node scheduler ([c552b08](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/c552b0806eff4332abc6882f4364ef467ab42f1b))
+* **wip:** start working at node linker ([37d1a62](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/37d1a62c14562bdf022fd564f4c558a8eac51a5c))
+
 ## [1.3.1](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.3.0...1.3.1) (2026-03-19)
 
 ### Bug Fixes
