@@ -2,8 +2,9 @@
     "name": "unibo.collektive.unity",
     "rootNamespace": "Collektive.Unity",
     "references": [
-      "Google.Protobuf",
-      "Unity.Protobuf.CodeGen"
+        "Google.Protobuf",
+        "Unity.Protobuf.CodeGen",
+        "TNRD.SerializableInterface"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

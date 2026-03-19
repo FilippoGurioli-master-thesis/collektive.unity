@@ -1,3 +1,7 @@
+using Collektive.Unity.Attributes;
+using Collektive.Unity.BackendWrapper;
+using UnityEngine;
+
 namespace Collektive.Unity.CollectiveNode
 {
     [DisallowMultipleComponent]

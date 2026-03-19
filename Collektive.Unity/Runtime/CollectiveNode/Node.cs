@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-using AYellowPaper;
+using System.Linq;
+using Collektive.Unity.Schema;
+using TNRD;
 using UnityEngine;
 
 namespace Collektive.Unity.CollectiveNode
@@ -16,10 +18,10 @@ namespace Collektive.Unity.CollectiveNode
 
         [Header("Components")]
         [SerializeField]
-        private List<InterfaceReference<ISensor, MonoBehaviour>> sensors = new();
+        private List<SerializableInterface<ISensor>> sensors = new();
 
         [SerializeField]
-        private List<InterfaceReference<IActuator, MonoBehaviour>> actuators = new();
+        private List<SerializableInterface<IActuator>> actuators = new();
 
         private List<ISensor> _sensors = new();
         private List<IActuator> _actuators = new();
@@ -33,9 +35,9 @@ namespace Collektive.Unity.CollectiveNode
                 sensors.Clear();
                 actuators.Clear();
                 foreach (var actuator in GetComponentsInChildren<IActuator>())
-                    actuators.Add(actuator);
+                    actuators.Add(new SerializableInterface<IActuator>(actuator));
                 foreach (var sensor in GetComponentsInChildren<ISensor>())
-                    sensors.Add(sensor);
+                    sensors.Add(new SerializableInterface<ISensor>(sensor));
             }
             _sensors = sensors.Select(s => s.Value).ToList();
             _actuators = actuators.Select(a => a.Value).ToList();
@@ -45,7 +47,7 @@ namespace Collektive.Unity.CollectiveNode
         {
             var data = new SensorData();
             foreach (var sensor in _sensors)
-                data.MergeFrom(sensor.Sense());
+                sensor.Contribute(data);
             return data;
         }
 
