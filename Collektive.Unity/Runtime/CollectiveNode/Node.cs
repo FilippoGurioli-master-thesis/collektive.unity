@@ -41,12 +41,17 @@ namespace Collektive.Unity.CollectiveNode
             _actuators = actuators.Select(a => a.Value).ToList();
         }
 
-        public SensorData CollectSensorData()
+        public SensorData Sense()
         {
             var data = new SensorData();
             foreach (var sensor in _sensors)
                 data.MergeFrom(sensor.Sense());
             return data;
+        }
+
+        public void Compute()
+        {
+            //TODO
         }
 
         public void Act(ActuatorData data)
