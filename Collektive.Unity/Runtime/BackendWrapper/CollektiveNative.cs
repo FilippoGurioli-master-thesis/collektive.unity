@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Collektive.Unity.Schema;
 using Google.Protobuf;
+using UnityEngine;
 
 namespace Collektive.Unity.BackendWrapper
 {

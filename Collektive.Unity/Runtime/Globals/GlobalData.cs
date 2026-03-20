@@ -29,5 +29,7 @@ namespace Collektive.Unity.Globals
         public float MaxUpdateFrequency => maxUpdateFrequency;
 
         public float MinUpdatePeriod => 1f / MaxUpdateFrequency;
+
+        public float TimeScale => timeScale;
     }
 }
