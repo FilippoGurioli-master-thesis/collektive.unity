@@ -19,6 +19,11 @@ namespace Collektive.Unity.Globals
         [Min(1f)]
         private float maxUpdateFrequency = 60f;
 
+        [SerializeField]
+        [Tooltip("TODO")]
+        [Range(0.01f, 4)]
+        private float timeScale = 1f;
+
         public int MasterSeed => masterSeed;
 
         public float MaxUpdateFrequency => maxUpdateFrequency;
