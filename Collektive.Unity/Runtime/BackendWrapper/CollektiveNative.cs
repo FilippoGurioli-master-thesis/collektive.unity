@@ -9,8 +9,11 @@ namespace Collektive.Unity.BackendWrapper
     {
         private const string LibName = "collektive_backend";
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Initialize() => InternalInitialize();
+
         [DllImport(LibName, EntryPoint = "initialize", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void InternalInitialize();
+        private static extern void InternalInitialize();
 
         [DllImport(LibName, EntryPoint = "step", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr Step(

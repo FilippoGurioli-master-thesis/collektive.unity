@@ -28,6 +28,8 @@ namespace Collektive.Unity.CollectiveNode
         private CollektiveNodeComponent _nodeComponent;
         private INodeScheduler _scheduler;
 
+        public int Id => _nodeComponent.Node.Id;
+
         private void Awake()
         {
             _nodeComponent = GetComponent<CollektiveNodeComponent>();
