@@ -1,3 +1,18 @@
+## [1.5.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.4.0...1.5.0) (2026-03-20)
+
+### Features
+
+* **wip:** working on creating fixed time scheduler ([986ea24](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/986ea2416f2c0aaf342b9a6a2f0857fb4d6f7d1c))
+
+### General maintenance
+
+* **wip:** working on fixed time scheduler ([14aaa84](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/14aaa84aed69ec14dbcd8c05d8bf6a1792cfbbaa))
+* **wip:** working on fixed time scheduler ([979c625](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/979c625c6b71777d0b31bbca0ea7faa539a93c89))
+
+### Refactoring
+
+* rename node linker -> neighboring component ([85546d0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/85546d03c032d0c5aeea199792fb7e127e4e8b5c))
+
 ## [1.4.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.3.1...1.4.0) (2026-03-19)
 
 ### Features
