@@ -524,6 +524,10 @@ GameObject:
   - component: {fileID: 1207492645}
   - component: {fileID: 1207492644}
   - component: {fileID: 1207492643}
+  - component: {fileID: 1207492649}
+  - component: {fileID: 1207492648}
+  - component: {fileID: 1207492647}
+  - component: {fileID: 1207492646}
   m_Layer: 0
   m_Name: node
   m_TagString: Untagged
@@ -624,6 +628,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207492641}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1207492646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207492641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add3bf697d1f8dba3ba80fe0fbf6ed2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: unibo.collektive.unity::Collektive.Unity.Example.ProximityNeighboring
+--- !u!114 &1207492647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207492641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f028ac08f73082b8191f4cf5b795d6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: unibo.collektive.unity::Collektive.Unity.CollectiveNode.Node
+  automaticComponentsDetection: 1
+  sensors: []
+  actuators: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1207492648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207492641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abee8c6e784de0334a93691406fff8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: unibo.collektive.unity::Collektive.Unity.Example.FixedRateScheduler
+  interval: 1
+  offset: 0
+--- !u!114 &1207492649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207492641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a032176f5bcb14806a75b675a55ad832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: unibo.collektive.unity::Collektive.Unity.CollectiveNode.CollektiveNodeComponent
+  id: 0
 --- !u!1 &1340982514
 GameObject:
   m_ObjectHideFlags: 0
