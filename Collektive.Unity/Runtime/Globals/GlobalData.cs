@@ -2,8 +2,10 @@ using UnityEngine;
 
 namespace Collektive.Unity.Globals
 {
+    [CreateAssetMenu(fileName = "GlobalData", menuName = "Collektive/GlobalData")]
     public class GlobalData : ScriptableObject
     {
+        [Header("Global configurations")]
         [SerializeField]
         [Tooltip(
             "Master seed to have reproducible simulations. All random generators starts from this"
@@ -20,9 +22,25 @@ namespace Collektive.Unity.Globals
         private float maxUpdateFrequency = 60f;
 
         [SerializeField]
-        [Tooltip("TODO")]
+        [Tooltip("The time scale at which let the simulation run at.")]
         [Range(0.01f, 4)]
         private float timeScale = 1f;
+
+        [Header("Neighborhood viz")]
+        [SerializeField]
+        private bool showNeighborhood = true;
+
+        [SerializeField]
+        private float lineWidth = 0.05f;
+
+        [SerializeField]
+        private Color bidirectionalLinkColor = Color.cyan;
+
+        [SerializeField]
+        private Color monodirectionalLinkColor = Color.red;
+
+        [SerializeField]
+        private Material linkMaterial;
 
         public int MasterSeed => masterSeed;
 
@@ -31,5 +49,14 @@ namespace Collektive.Unity.Globals
         public float MinUpdatePeriod => 1f / MaxUpdateFrequency;
 
         public float TimeScale => timeScale;
+
+        public bool ShowNeighborhood => showNeighborhood;
+
+        public (Color mono, Color bi) LinkColor =>
+            (monodirectionalLinkColor, bidirectionalLinkColor);
+
+        public float LineWidth => lineWidth;
+
+        public Material LinkMaterial => linkMaterial;
     }
 }

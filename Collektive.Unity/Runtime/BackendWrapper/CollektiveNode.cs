@@ -28,24 +28,6 @@ namespace Collektive.Unity.BackendWrapper
 
         public bool UnsubscribeFrom(CollektiveNode other) => UnsubscribeFrom(other.Id);
 
-        public bool ConnectTo(int otherNode)
-        {
-            var res1 = CollektiveNative.InternalSubscribe(Id, otherNode);
-            var res2 = CollektiveNative.InternalSubscribe(otherNode, Id);
-            return res1 && res2;
-        }
-
-        public bool ConnectTo(CollektiveNode other) => ConnectTo(other.Id);
-
-        public bool DisconnectFrom(int otherNode)
-        {
-            var res1 = CollektiveNative.InternalUnsubscribe(Id, otherNode);
-            var res2 = CollektiveNative.InternalUnsubscribe(otherNode, Id);
-            return res1 && res2;
-        }
-
-        public bool DisconnectFrom(CollektiveNode other) => DisconnectFrom(other.Id);
-
         public void Dispose()
         {
             if (!CollektiveNative.InternalRemoveNode(Id))
