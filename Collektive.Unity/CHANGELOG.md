@@ -1,3 +1,14 @@
+## [1.6.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.5.0...1.6.0) (2026-03-21)
+
+### Features
+
+* a first working implementation ([2e131fb](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/2e131fb8cda1de6933de5afa9c697e08129c1549))
+* create proximity neighboring component ([706946a](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/706946a75696ea65c248096a774ceeee1106a701))
+
+### General maintenance
+
+* save unity scene ([8b58778](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/8b58778c9ba71b58a6dc4ecc973653ef43b9e5f6))
+
 ## [1.5.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.4.0...1.5.0) (2026-03-20)
 
 ### Features
