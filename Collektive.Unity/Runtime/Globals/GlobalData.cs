@@ -30,6 +30,11 @@ namespace Collektive.Unity.Globals
         [SerializeField]
         private bool showNeighborhood = true;
 
+        [Header("Actuators")]
+        [SerializeField]
+        [Min(0.01f)]
+        private float forceMagnitude = 2f;
+
         [SerializeField]
         private float lineWidth = 0.05f;
 
@@ -58,5 +63,12 @@ namespace Collektive.Unity.Globals
         public float LineWidth => lineWidth;
 
         public Material LinkMaterial => linkMaterial;
+
+        public float ForceMagnitude => forceMagnitude;
+
+        private void OnEnable()
+        {
+            Time.fixedDeltaTime = MinUpdatePeriod;
+        }
     }
 }
