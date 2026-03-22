@@ -67,17 +67,39 @@ namespace Collektive.Unity.Editor
         private static bool RunGradleBuild()
         {
             var workingDir = Path.GetFullPath(KotlinProjectPath);
+            var filename = "/bin/bash";
+            var gradleExecutable = Path.GetFullPath(GradleExecutable);
+            var args =
+                $"-c \"source ~/.sdkman/bin/sdkman-init.sh 2>/dev/null; {gradleExecutable} {GradleTask}\"";
             var startInfo = new ProcessStartInfo
             {
-                FileName = Path.GetFullPath(GradleExecutable),
-                Arguments = GradleTask,
+                FileName = filename,
+                Arguments = args,
                 WorkingDirectory = workingDir,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 CreateNoWindow = true,
             };
-            using var process = Process.Start(startInfo);
+            Debug.Log(
+                $"Running {startInfo.FileName} {startInfo.Arguments} in {startInfo.WorkingDirectory}"
+            );
+            using var process = new Process { StartInfo = startInfo };
+            process.OutputDataReceived += (_, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                    Debug.Log($"[gradle] {e.Data}");
+            };
+            process.ErrorDataReceived += (_, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                    Debug.LogError($"[gradle] {e.Data}");
+            };
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             process.WaitForExit();
+            Debug.Log($"The process has returned {process.ExitCode}");
             return process.ExitCode == 0;
         }
 

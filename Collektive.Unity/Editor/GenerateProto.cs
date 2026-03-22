@@ -14,7 +14,7 @@ namespace Collektive.Unity.Editor
         public static void Generate()
         {
             var workingDir = Path.GetFullPath("..");
-            var filename = "npx";
+            var filename = "/bin/bash";
             var outputDir = Path.Combine(workingDir, "Collektive.Unity", "Runtime", "Generated");
             var baseDir = Path.Combine(
                 workingDir,
@@ -27,7 +27,8 @@ namespace Collektive.Unity.Editor
             foreach (var file in Directory.EnumerateFiles(baseDir, "*.proto"))
             {
                 var args =
-                    $"protoc -I={baseDir} --csharp_out={outputDir} {Path.Combine(baseDir, Path.GetFileName(file))}";
+                    "-c \"source ~/.nvm/nvm.sh 2>/dev/null;"
+                    + $"npx protoc -I={baseDir} --csharp_out={outputDir} {Path.Combine(baseDir, Path.GetFileName(file))}\"";
                 var startInfo = new ProcessStartInfo
                 {
                     FileName = filename,
@@ -74,6 +75,8 @@ namespace Collektive.Unity.Editor
 
         public void OnPreprocessBuild(BuildReport report)
         {
+            if (report.summary.platform == BuildTarget.NoTarget)
+                return;
             GenerateProto.Log("Generating cs from proto files");
             GenerateProto.Generate();
         }
