@@ -1,3 +1,14 @@
+## [1.6.1](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.6.0...1.6.1) (2026-03-23)
+
+### Documentation
+
+* create name refactor doc ([7e12ed8](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/7e12ed883e53c3464610c4183375be8d5ebc0a50))
+
+### General maintenance
+
+* create position and source sensors and motion actuator ([7a52fcb](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/7a52fcb2872667543eeaaebe79934bba292d70be))
+* improve editor tools by trying to use nvm and sdkman before executing ([c710848](https://github.com/FilippoGurioli-master-thesis/collektive.unity/commit/c710848bc52d77ee800d212a5986126dedda07c0))
+
 ## [1.6.0](https://github.com/FilippoGurioli-master-thesis/collektive.unity/compare/1.5.0...1.6.0) (2026-03-21)
 
 ### Features
