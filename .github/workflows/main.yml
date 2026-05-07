@@ -86,7 +86,7 @@ jobs:
           restore-keys: |
             Library-${{ matrix.targetPlatform }}-
       - name: Build Unity Project
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v5
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: ./Sandbox.Collektive.Unity
