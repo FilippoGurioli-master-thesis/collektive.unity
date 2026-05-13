@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform") version "2.3.21"
     id("it.unibo.collektive.collektive-plugin") version "28.2.5"
-    id("com.squareup.wire") version "6.2.0"
+    id("com.squareup.wire") version "6.3.0"
 }
 
 repositories {
