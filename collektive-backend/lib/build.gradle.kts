@@ -25,7 +25,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("it.unibo.collektive:collektive-dsl:28.3.0")
+                implementation("it.unibo.collektive:collektive-dsl:28.3.1")
                 implementation("it.unibo.collektive:collektive-stdlib:28.3.0")
                 implementation("com.squareup.wire:wire-runtime:6.4.5")
             }
