@@ -26,7 +26,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("it.unibo.collektive:collektive-dsl:28.3.4")
-                implementation("it.unibo.collektive:collektive-stdlib:28.3.2")
+                implementation("it.unibo.collektive:collektive-stdlib:28.3.4")
                 implementation("com.squareup.wire:wire-runtime:7.1.0")
             }
         }
