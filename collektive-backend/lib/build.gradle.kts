@@ -27,7 +27,7 @@ kotlin {
             dependencies {
                 implementation("it.unibo.collektive:collektive-dsl:28.3.5")
                 implementation("it.unibo.collektive:collektive-stdlib:28.3.5")
-                implementation("com.squareup.wire:wire-runtime:7.1.2")
+                implementation("com.squareup.wire:wire-runtime:7.2.0")
             }
         }
         val nativeMain by creating {
